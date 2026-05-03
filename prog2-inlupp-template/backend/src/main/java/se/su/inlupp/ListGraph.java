@@ -3,7 +3,7 @@ package se.su.inlupp;
 import java.util.*;
 
 public class ListGraph<T> implements Graph<T> {
-    Map<T, List<GraphEdge<T>>> adjecencyListMap = new HashMap<>();
+    Map<T, List<Edge<T>>> adjecencyListMap = new HashMap<>();
 
   @Override
   public void add(T node) {
@@ -16,14 +16,9 @@ public class ListGraph<T> implements Graph<T> {
           throw new NoSuchElementException("Graph has no such element!");
       }
       for(T t: adjecencyListMap.keySet()){
-          for(GraphEdge<T> edge: adjecencyListMap.get(t)){
-              if(edge.getDestination()==node){
-                  adjecencyListMap.remove(t);
-              }
+              adjecencyListMap.get(t).removeIf(edge -> edge.getDestination().equals(node));
           }
-      }
       adjecencyListMap.remove(node);
-      //Make it so it removes itself from other nodes' AdjacencyLists too later
   }
 
   @Override
@@ -39,7 +34,7 @@ public class ListGraph<T> implements Graph<T> {
       if(weight<0) {
           throw new IllegalArgumentException("Weight can not be negative!");
       }
-      //I do not know if this will work
+      //Keep an eye on this below, might break?
       if(getEdgeBetween(node1,node2)!=null){
           throw new IllegalStateException("Edge already exists!");
       }
@@ -52,10 +47,10 @@ public class ListGraph<T> implements Graph<T> {
       if(!adjecencyListMap.containsKey(node1) || !adjecencyListMap.containsKey(node2)) {
           throw new NoSuchElementException("Object does not exist!");
       }
-      for(GraphEdge<T> edge1: adjecencyListMap.get(node1)) {
+      for(Edge<T> edge1: adjecencyListMap.get(node1)) {
           if(edge1.getDestination()==node2){
               adjecencyListMap.get(node1).remove(edge1);
-              for(GraphEdge<T> edge2: adjecencyListMap.get(node2)) {
+              for(Edge<T> edge2: adjecencyListMap.get(node2)) {
                   if(edge2.getDestination()==node1){
                       adjecencyListMap.get(node2).remove(edge2);
                       return;
@@ -72,10 +67,13 @@ public class ListGraph<T> implements Graph<T> {
       if(!adjecencyListMap.containsKey(node1) || !adjecencyListMap.containsKey(node2)) {
           throw new NoSuchElementException("Object does not exist!");
       }
-      for(GraphEdge<T> edge1: adjecencyListMap.get(node1)) {
+      if(weight<0){
+          throw new IllegalArgumentException("Weight can not be lower than zero!");
+      }
+      for(Edge<T> edge1: adjecencyListMap.get(node1)) {
           if(edge1.getDestination()==node2) {
               edge1.setWeight(weight);
-              for(GraphEdge<T> edge2: adjecencyListMap.get(node2)) {
+              for(Edge<T> edge2: adjecencyListMap.get(node2)) {
                   if (edge2.getDestination() == node1) {
                       edge2.setWeight(weight);
                       return;
@@ -105,7 +103,7 @@ public class ListGraph<T> implements Graph<T> {
       if (!adjecencyListMap.containsKey(node1) || !adjecencyListMap.containsKey(node2)) {
           throw new NoSuchElementException("Object does not exist!");
       }
-      for (GraphEdge<T> edge : adjecencyListMap.get(node1)) {
+      for (Edge<T> edge : adjecencyListMap.get(node1)) {
           if (edge.getDestination() == node2) {
               return edge;
           }
@@ -117,5 +115,10 @@ public class ListGraph<T> implements Graph<T> {
   public Iterator<T> iterator() {
       return adjecencyListMap.keySet().iterator();
   }
+
+    @Override
+    public String toString() {
+        return ""+adjecencyListMap;
+    }
 }
 

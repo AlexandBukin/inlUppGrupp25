@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="se.su.inlupp.GraphTest" time="0.145" tests="48" errors="11" skipped="0" failures="4">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="se.su.inlupp.GraphTest" time="0.144" tests="48" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="25"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -16,7 +16,7 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-25.0.2\bin"/>
-    <property name="sun.java.command" value="C:\Users\alexa\AppData\Local\Temp\surefire15309157187572859192\surefirebooter-20260503034312891_3.jar C:\Users\alexa\AppData\Local\Temp\surefire15309157187572859192 2026-05-03T03-43-12_787-jvmRun1 surefire-20260503034312891_1tmp surefire_0-20260503034312891_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\alexa\AppData\Local\Temp\surefire17683437677205712261\surefirebooter-20260504000138068_3.jar C:\Users\alexa\AppData\Local\Temp\surefire17683437677205712261 2026-05-04T00-01-37_972-jvmRun1 surefire-20260504000138068_1tmp surefire_0-20260504000138068_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\alexa\IdeaProjects\inlUppGrupp25\prog2-inlupp-template\backend\target\test-classes;C:\Users\alexa\IdeaProjects\inlUppGrupp25\prog2-inlupp-template\backend\target\classes;C:\Users\alexa\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.11.0\junit-jupiter-engine-5.11.0.jar;C:\Users\alexa\.m2\repository\org\junit\platform\junit-platform-engine\1.11.0\junit-platform-engine-1.11.0.jar;C:\Users\alexa\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\alexa\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.11.0\junit-jupiter-api-5.11.0.jar;C:\Users\alexa\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\alexa\.m2\repository\org\junit\platform\junit-platform-commons\1.11.0\junit-platform-commons-1.11.0.jar;C:\Users\alexa\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.11.0\junit-jupiter-params-5.11.0.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -32,7 +32,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\alexa\AppData\Local\Temp\surefire15309157187572859192\surefirebooter-20260503034312891_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\alexa\AppData\Local\Temp\surefire17683437677205712261\surefirebooter-20260504000138068_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="25.0.2+10-69"/>
@@ -65,196 +65,58 @@
     <property name="maven.repo.local" value="C:\Users\alexa\.m2\repository"/>
     <property name="java.class.version" value="69.0"/>
   </properties>
-  <testcase name="__version" classname="se.su.inlupp.GraphTest" time="0.018">
+  <testcase name="__version" classname="se.su.inlupp.GraphTest" time="0.019">
     <system-out><![CDATA[Test version 3.0 (2026-03-24)
 ]]></system-out>
   </testcase>
   <testcase name="test00_genericGraphAcceptsDifferentNodeTypes" classname="se.su.inlupp.GraphTest" time="0.003"/>
-  <testcase name="test00_newGraphIsEmptyGraph" classname="se.su.inlupp.GraphTest" time="0.001"/>
+  <testcase name="test00_newGraphIsEmptyGraph" classname="se.su.inlupp.GraphTest" time="0.002"/>
   <testcase name="test01_add(String)[1]" classname="se.su.inlupp.GraphTest" time="0.006"/>
   <testcase name="test01_add(String)[2]" classname="se.su.inlupp.GraphTest" time="0.001"/>
   <testcase name="test01_add(String)[3]" classname="se.su.inlupp.GraphTest" time="0.001"/>
-  <testcase name="test01_add_duplicate" classname="se.su.inlupp.GraphTest" time="0.001"/>
-  <testcase name="test02_hasNode_existing" classname="se.su.inlupp.GraphTest" time="0.0"/>
-  <testcase name="test02_hasNode_nonexisting" classname="se.su.inlupp.GraphTest" time="0.0"/>
-  <testcase name="test02_hasNode_after_remove" classname="se.su.inlupp.GraphTest" time="0.0"/>
-  <testcase name="test04_remove_existing_node_with_edge" classname="se.su.inlupp.GraphTest" time="0.004">
-    <error type="java.util.ConcurrentModificationException"><![CDATA[java.util.ConcurrentModificationException
-	at java.base/java.util.HashMap$HashIterator.nextNode(HashMap.java:1606)
-	at java.base/java.util.HashMap$KeyIterator.next(HashMap.java:1629)
-	at se.su.inlupp.ListGraph.remove(ListGraph.java:18)
-	at se.su.inlupp.GraphTest.test04_remove_existing_node_with_edge(GraphTest.java:183)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-]]></error>
-  </testcase>
-  <testcase name="test04_remove_nonexisting_node" classname="se.su.inlupp.GraphTest" time="0.002"/>
+  <testcase name="test01_add_duplicate" classname="se.su.inlupp.GraphTest" time="0.002"/>
+  <testcase name="test02_hasNode_existing" classname="se.su.inlupp.GraphTest" time="0.001"/>
+  <testcase name="test02_hasNode_nonexisting" classname="se.su.inlupp.GraphTest" time="0.002"/>
+  <testcase name="test02_hasNode_after_remove" classname="se.su.inlupp.GraphTest" time="0.001"/>
+  <testcase name="test04_remove_existing_node_with_edge" classname="se.su.inlupp.GraphTest" time="0.003"/>
+  <testcase name="test04_remove_nonexisting_node" classname="se.su.inlupp.GraphTest" time="0.001"/>
   <testcase name="test05_getNodes" classname="se.su.inlupp.GraphTest" time="0.001"/>
   <testcase name="test05_iterator" classname="se.su.inlupp.GraphTest" time="0.002"/>
-  <testcase name="test05_iterator_empty" classname="se.su.inlupp.GraphTest" time="0.001"/>
-  <testcase name="test06_connect_existing_nodes_with_edge" classname="se.su.inlupp.GraphTest" time="0.0"/>
+  <testcase name="test05_iterator_empty" classname="se.su.inlupp.GraphTest" time="0.0"/>
+  <testcase name="test06_connect_existing_nodes_with_edge" classname="se.su.inlupp.GraphTest" time="0.002"/>
   <testcase name="test06_connect_existing_nodes_without_edge" classname="se.su.inlupp.GraphTest" time="0.001"/>
   <testcase name="test06_connect_negative_weight" classname="se.su.inlupp.GraphTest" time="0.001"/>
   <testcase name="test06_connect_non_existing_nodes" classname="se.su.inlupp.GraphTest" time="0.001"/>
   <testcase name="test07_disconnect" classname="se.su.inlupp.GraphTest" time="0.0"/>
-  <testcase name="test07_disconnect_missing_node" classname="se.su.inlupp.GraphTest" time="0.0"/>
+  <testcase name="test07_disconnect_missing_node" classname="se.su.inlupp.GraphTest" time="0.001"/>
   <testcase name="test07_disconnect_no_connection" classname="se.su.inlupp.GraphTest" time="0.0"/>
   <testcase name="test08_getEdgeBetween_existing_edge" classname="se.su.inlupp.GraphTest" time="0.0"/>
-  <testcase name="test08_getEdgeBetween_missing_node" classname="se.su.inlupp.GraphTest" time="0.0"/>
+  <testcase name="test08_getEdgeBetween_missing_node" classname="se.su.inlupp.GraphTest" time="0.001"/>
   <testcase name="test08_getEdgeBetween_nonexisting_edge" classname="se.su.inlupp.GraphTest" time="0.0"/>
   <testcase name="test09_getEdgesFrom_existing_node_with_edges" classname="se.su.inlupp.GraphTest" time="0.001"/>
   <testcase name="test09_getEdgesFrom_existing_node_without_edges" classname="se.su.inlupp.GraphTest" time="0.0"/>
-  <testcase name="test09_getEdgesFrom_non_existing_node" classname="se.su.inlupp.GraphTest" time="0.001"/>
-  <testcase name="test12_setConnectionWeight_invalid_weight" classname="se.su.inlupp.GraphTest" time="0.002">
-    <failure message="Fel: IllegalArgumentException borde ha kastats. ==&gt; Expected java.lang.IllegalArgumentException to be thrown, but nothing was thrown." type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Fel: IllegalArgumentException borde ha kastats. ==> Expected java.lang.IllegalArgumentException to be thrown, but nothing was thrown.
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:39)
-	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3153)
-	at se.su.inlupp.GraphTest.test12_setConnectionWeight_invalid_weight(GraphTest.java:423)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-]]></failure>
-  </testcase>
-  <testcase name="test12_setConnectionWeight_invalid_node" classname="se.su.inlupp.GraphTest" time="0.001"/>
+  <testcase name="test09_getEdgesFrom_non_existing_node" classname="se.su.inlupp.GraphTest" time="0.0"/>
+  <testcase name="test12_setConnectionWeight_invalid_weight" classname="se.su.inlupp.GraphTest" time="0.0"/>
+  <testcase name="test12_setConnectionWeight_invalid_node" classname="se.su.inlupp.GraphTest" time="0.0"/>
   <testcase name="test12_setConnectionWeight_valid_edge" classname="se.su.inlupp.GraphTest" time="0.001"/>
   <testcase name="test12_setConnectionWeight_no_edge" classname="se.su.inlupp.GraphTest" time="0.001"/>
-  <testcase name="test13_edgeToString_valid_edge" classname="se.su.inlupp.GraphTest" time="0.002">
-    <failure message="Edge&lt;String&gt;::toString ser inte ut som förväntat. Borde ha varit:&#10;till G med A -&gt; G tar 3&#10;men var:&#10;se.su.inlupp.GraphEdge@26275bef&#10; ==&gt; expected: &lt;till G med A -&gt; G tar 3&gt; but was: &lt;se.su.inlupp.GraphEdge@26275bef&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
-Edge<String>::toString ser inte ut som förväntat. Borde ha varit:
-till G med A -> G tar 3
-men var:
-se.su.inlupp.GraphEdge@26275bef
- ==> expected: <till G med A -> G tar 3> but was: <se.su.inlupp.GraphEdge@26275bef>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
-	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
-	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1156)
-	at se.su.inlupp.GraphTest.test13_edgeToString_valid_edge(GraphTest.java:468)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-]]></failure>
-  </testcase>
-  <testcase name="test14_graphToString" classname="se.su.inlupp.GraphTest" time="0.001">
-    <failure message="Någon båge saknas i toString: [se.su.inlupp.GraphEdge@79da8dc5, se.su.inlupp.GraphEdge@3738449f, se.su.inlupp.GraphEdge@55536d9e, se.su.inlupp.GraphEdge@e7edb54, se.su.inlupp.GraphEdge@378542de, se.su.inlupp.GraphEdge@72cde7cc, se.su.inlupp.GraphEdge@34f7cfd9, se.su.inlupp.GraphEdge@5fd4f8f5, se.su.inlupp.GraphEdge@3e6ef8ad, se.su.inlupp.GraphEdge@2e55dd0c, se.su.inlupp.GraphEdge@346d61be, se.su.inlupp.GraphEdge@11bd0f3b, se.su.inlupp.GraphEdge@68c72235, se.su.inlupp.GraphEdge@62230c58, se.su.inlupp.GraphEdge@3d1cfad4, se.su.inlupp.GraphEdge@c333c60, se.su.inlupp.GraphEdge@2cd2a21f, se.su.inlupp.GraphEdge@10959ece, se.su.inlupp.GraphEdge@67080771, se.su.inlupp.GraphEdge@69e1dd28, se.su.inlupp.GraphEdge@59af0466, se.su.inlupp.GraphEdge@3a6bb9bf, se.su.inlupp.GraphEdge@65f095f8, se.su.inlupp.GraphEdge@1eb5174b, se.su.inlupp.GraphEdge@74455848, se.su.inlupp.GraphEdge@747edf66]" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Någon båge saknas i toString: [se.su.inlupp.GraphEdge@79da8dc5, se.su.inlupp.GraphEdge@3738449f, se.su.inlupp.GraphEdge@55536d9e, se.su.inlupp.GraphEdge@e7edb54, se.su.inlupp.GraphEdge@378542de, se.su.inlupp.GraphEdge@72cde7cc, se.su.inlupp.GraphEdge@34f7cfd9, se.su.inlupp.GraphEdge@5fd4f8f5, se.su.inlupp.GraphEdge@3e6ef8ad, se.su.inlupp.GraphEdge@2e55dd0c, se.su.inlupp.GraphEdge@346d61be, se.su.inlupp.GraphEdge@11bd0f3b, se.su.inlupp.GraphEdge@68c72235, se.su.inlupp.GraphEdge@62230c58, se.su.inlupp.GraphEdge@3d1cfad4, se.su.inlupp.GraphEdge@c333c60, se.su.inlupp.GraphEdge@2cd2a21f, se.su.inlupp.GraphEdge@10959ece, se.su.inlupp.GraphEdge@67080771, se.su.inlupp.GraphEdge@69e1dd28, se.su.inlupp.GraphEdge@59af0466, se.su.inlupp.GraphEdge@3a6bb9bf, se.su.inlupp.GraphEdge@65f095f8, se.su.inlupp.GraphEdge@1eb5174b, se.su.inlupp.GraphEdge@74455848, se.su.inlupp.GraphEdge@747edf66]
-	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:38)
-	at org.junit.jupiter.api.Assertions.fail(Assertions.java:138)
-	at se.su.inlupp.GraphTest.test14_graphToString(GraphTest.java:502)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-]]></failure>
-  </testcase>
-  <testcase name="test15_edgeSetWeight" classname="se.su.inlupp.GraphTest" time="0.001">
-    <failure message="Fel: IllegalArgumentException borde ha kastats. ==&gt; Expected java.lang.IllegalArgumentException to be thrown, but nothing was thrown." type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Fel: IllegalArgumentException borde ha kastats. ==> Expected java.lang.IllegalArgumentException to be thrown, but nothing was thrown.
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:39)
-	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3153)
-	at se.su.inlupp.GraphTest.test15_edgeSetWeight(GraphTest.java:516)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-]]></failure>
-  </testcase>
+  <testcase name="test13_edgeToString_valid_edge" classname="se.su.inlupp.GraphTest" time="0.002"/>
+  <testcase name="test14_graphToString" classname="se.su.inlupp.GraphTest" time="0.001"/>
+  <testcase name="test15_edgeSetWeight" classname="se.su.inlupp.GraphTest" time="0.0"/>
   <testcase name="test20_dfs_findPath_existing" classname="se.su.inlupp.GraphTest" time="0.001"/>
-  <testcase name="test20_dfs_findPath_nonexisting" classname="se.su.inlupp.GraphTest" time="0.002">
+  <testcase name="test20_dfs_findPath_nonexisting" classname="se.su.inlupp.GraphTest" time="0.001">
     <system-out><![CDATA[No Path Found!
 ]]></system-out>
   </testcase>
-  <testcase name="test20_dfs_findPath_direct" classname="se.su.inlupp.GraphTest" time="0.0"/>
-  <testcase name="test21_bfs_findPath_existing" classname="se.su.inlupp.GraphTest" time="0.001">
-    <error message="Unimplemented method &apos;findPath&apos;" type="java.lang.UnsupportedOperationException"><![CDATA[java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
-	at se.su.inlupp.BFSPathFinder.findPath(BFSPathFinder.java:7)
-	at se.su.inlupp.GraphTest.test21_bfs_findPath_existing(GraphTest.java:564)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-]]></error>
-  </testcase>
-  <testcase name="test21_bfs_findPath_nonexisting" classname="se.su.inlupp.GraphTest" time="0.001">
-    <error message="Unimplemented method &apos;findPath&apos;" type="java.lang.UnsupportedOperationException"><![CDATA[java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
-	at se.su.inlupp.BFSPathFinder.findPath(BFSPathFinder.java:7)
-	at se.su.inlupp.GraphTest.test21_bfs_findPath_nonexisting(GraphTest.java:578)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-]]></error>
-  </testcase>
-  <testcase name="test21_bfs_findPath_shortest_by_edges" classname="se.su.inlupp.GraphTest" time="0.0">
-    <error message="Unimplemented method &apos;findPath&apos;" type="java.lang.UnsupportedOperationException"><![CDATA[java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
-	at se.su.inlupp.BFSPathFinder.findPath(BFSPathFinder.java:7)
-	at se.su.inlupp.GraphTest.test21_bfs_findPath_shortest_by_edges(GraphTest.java:590)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-]]></error>
-  </testcase>
-  <testcase name="test21_bfs_findPath_direct" classname="se.su.inlupp.GraphTest" time="0.0">
-    <error message="Unimplemented method &apos;findPath&apos;" type="java.lang.UnsupportedOperationException"><![CDATA[java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
-	at se.su.inlupp.BFSPathFinder.findPath(BFSPathFinder.java:7)
-	at se.su.inlupp.GraphTest.test21_bfs_findPath_direct(GraphTest.java:604)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-]]></error>
-  </testcase>
-  <testcase name="test22_path_getNodes" classname="se.su.inlupp.GraphTest" time="0.001">
-    <error message="Unimplemented method &apos;findPath&apos;" type="java.lang.UnsupportedOperationException"><![CDATA[java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
-	at se.su.inlupp.BFSPathFinder.findPath(BFSPathFinder.java:7)
-	at se.su.inlupp.GraphTest.test22_path_getNodes(GraphTest.java:616)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-]]></error>
-  </testcase>
-  <testcase name="test22_path_getEdges" classname="se.su.inlupp.GraphTest" time="0.001">
-    <error message="Unimplemented method &apos;findPath&apos;" type="java.lang.UnsupportedOperationException"><![CDATA[java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
-	at se.su.inlupp.BFSPathFinder.findPath(BFSPathFinder.java:7)
-	at se.su.inlupp.GraphTest.test22_path_getEdges(GraphTest.java:633)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-]]></error>
-  </testcase>
-  <testcase name="test22_path_getTotalWeight" classname="se.su.inlupp.GraphTest" time="0.001">
-    <error message="Unimplemented method &apos;findPath&apos;" type="java.lang.UnsupportedOperationException"><![CDATA[java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
-	at se.su.inlupp.BFSPathFinder.findPath(BFSPathFinder.java:7)
-	at se.su.inlupp.GraphTest.test22_path_getTotalWeight(GraphTest.java:647)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-]]></error>
-  </testcase>
-  <testcase name="test22_path_iterable" classname="se.su.inlupp.GraphTest" time="0.001">
-    <error message="Unimplemented method &apos;findPath&apos;" type="java.lang.UnsupportedOperationException"><![CDATA[java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
-	at se.su.inlupp.BFSPathFinder.findPath(BFSPathFinder.java:7)
-	at se.su.inlupp.GraphTest.test22_path_iterable(GraphTest.java:662)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-]]></error>
-  </testcase>
-  <testcase name="test22_path_toString" classname="se.su.inlupp.GraphTest" time="0.0">
-    <error message="Unimplemented method &apos;findPath&apos;" type="java.lang.UnsupportedOperationException"><![CDATA[java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
-	at se.su.inlupp.BFSPathFinder.findPath(BFSPathFinder.java:7)
-	at se.su.inlupp.GraphTest.test22_path_toString(GraphTest.java:679)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-]]></error>
-  </testcase>
-  <testcase name="test23_strategy_pattern" classname="se.su.inlupp.GraphTest" time="0.0">
-    <error message="Unimplemented method &apos;findPath&apos;" type="java.lang.UnsupportedOperationException"><![CDATA[java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
-	at se.su.inlupp.BFSPathFinder.findPath(BFSPathFinder.java:7)
-	at se.su.inlupp.GraphTest.test23_strategy_pattern(GraphTest.java:699)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-]]></error>
-  </testcase>
+  <testcase name="test20_dfs_findPath_direct" classname="se.su.inlupp.GraphTest" time="0.001"/>
+  <testcase name="test21_bfs_findPath_existing" classname="se.su.inlupp.GraphTest" time="0.001"/>
+  <testcase name="test21_bfs_findPath_nonexisting" classname="se.su.inlupp.GraphTest" time="0.0"/>
+  <testcase name="test21_bfs_findPath_shortest_by_edges" classname="se.su.inlupp.GraphTest" time="0.001"/>
+  <testcase name="test21_bfs_findPath_direct" classname="se.su.inlupp.GraphTest" time="0.0"/>
+  <testcase name="test22_path_getNodes" classname="se.su.inlupp.GraphTest" time="0.002"/>
+  <testcase name="test22_path_getEdges" classname="se.su.inlupp.GraphTest" time="0.0"/>
+  <testcase name="test22_path_getTotalWeight" classname="se.su.inlupp.GraphTest" time="0.001"/>
+  <testcase name="test22_path_iterable" classname="se.su.inlupp.GraphTest" time="0.0"/>
+  <testcase name="test22_path_toString" classname="se.su.inlupp.GraphTest" time="0.002"/>
+  <testcase name="test23_strategy_pattern" classname="se.su.inlupp.GraphTest" time="0.0"/>
 </testsuite>
