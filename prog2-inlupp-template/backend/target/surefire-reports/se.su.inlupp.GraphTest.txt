@@ -1,21 +1,18 @@
 -------------------------------------------------------------------------------
 Test set: se.su.inlupp.GraphTest
 -------------------------------------------------------------------------------
-Tests run: 48, Failures: 5, Errors: 13, Skipped: 0, Time elapsed: 0.169 s <<< FAILURE! -- in se.su.inlupp.GraphTest
-se.su.inlupp.GraphTest.test04_remove_existing_node_with_edge -- Time elapsed: 0.008 s <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <Optional.empty> but was: <Optional[G]>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
-	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
-	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
-	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1145)
-	at se.su.inlupp.GraphTest.test04_remove_existing_node_with_edge(GraphTest.java:192)
+Tests run: 48, Failures: 4, Errors: 11, Skipped: 0, Time elapsed: 0.145 s <<< FAILURE! -- in se.su.inlupp.GraphTest
+se.su.inlupp.GraphTest.test04_remove_existing_node_with_edge -- Time elapsed: 0.004 s <<< ERROR!
+java.util.ConcurrentModificationException
+	at java.base/java.util.HashMap$HashIterator.nextNode(HashMap.java:1606)
+	at java.base/java.util.HashMap$KeyIterator.next(HashMap.java:1629)
+	at se.su.inlupp.ListGraph.remove(ListGraph.java:18)
+	at se.su.inlupp.GraphTest.test04_remove_existing_node_with_edge(GraphTest.java:183)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 
-se.su.inlupp.GraphTest.test12_setConnectionWeight_invalid_weight -- Time elapsed: 0.004 s <<< FAILURE!
+se.su.inlupp.GraphTest.test12_setConnectionWeight_invalid_weight -- Time elapsed: 0.002 s <<< FAILURE!
 org.opentest4j.AssertionFailedError: Fel: IllegalArgumentException borde ha kastats. ==> Expected java.lang.IllegalArgumentException to be thrown, but nothing was thrown.
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
 	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
@@ -31,8 +28,8 @@ org.opentest4j.AssertionFailedError:
 Edge<String>::toString ser inte ut som förväntat. Borde ha varit:
 till G med A -> G tar 3
 men var:
-se.su.inlupp.GraphEdge@7671cb68
- ==> expected: <till G med A -> G tar 3> but was: <se.su.inlupp.GraphEdge@7671cb68>
+se.su.inlupp.GraphEdge@26275bef
+ ==> expected: <till G med A -> G tar 3> but was: <se.su.inlupp.GraphEdge@26275bef>
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
 	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
 	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
@@ -43,8 +40,8 @@ se.su.inlupp.GraphEdge@7671cb68
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 
-se.su.inlupp.GraphTest.test14_graphToString -- Time elapsed: 0.002 s <<< FAILURE!
-org.opentest4j.AssertionFailedError: Någon båge saknas i toString: [se.su.inlupp.GraphEdge@79da8dc5, se.su.inlupp.GraphEdge@3738449f, se.su.inlupp.GraphEdge@53976f5c, se.su.inlupp.GraphEdge@55536d9e, se.su.inlupp.GraphEdge@e7edb54, se.su.inlupp.GraphEdge@378542de, se.su.inlupp.GraphEdge@72cde7cc, se.su.inlupp.GraphEdge@5fd4f8f5, se.su.inlupp.GraphEdge@3e6ef8ad, se.su.inlupp.GraphEdge@2e55dd0c, se.su.inlupp.GraphEdge@346d61be, se.su.inlupp.GraphEdge@11bd0f3b, se.su.inlupp.GraphEdge@2bfc268b, se.su.inlupp.GraphEdge@62230c58, se.su.inlupp.GraphEdge@3d1cfad4, se.su.inlupp.GraphEdge@c333c60, se.su.inlupp.GraphEdge@2cd2a21f, se.su.inlupp.GraphEdge@67080771, se.su.inlupp.GraphEdge@69e1dd28, se.su.inlupp.GraphEdge@59af0466, se.su.inlupp.GraphEdge@4e7912d8, se.su.inlupp.GraphEdge@65f095f8, se.su.inlupp.GraphEdge@1eb5174b, se.su.inlupp.GraphEdge@696da30b, se.su.inlupp.GraphEdge@74455848, se.su.inlupp.GraphEdge@747edf66]
+se.su.inlupp.GraphTest.test14_graphToString -- Time elapsed: 0.001 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Någon båge saknas i toString: [se.su.inlupp.GraphEdge@79da8dc5, se.su.inlupp.GraphEdge@3738449f, se.su.inlupp.GraphEdge@55536d9e, se.su.inlupp.GraphEdge@e7edb54, se.su.inlupp.GraphEdge@378542de, se.su.inlupp.GraphEdge@72cde7cc, se.su.inlupp.GraphEdge@34f7cfd9, se.su.inlupp.GraphEdge@5fd4f8f5, se.su.inlupp.GraphEdge@3e6ef8ad, se.su.inlupp.GraphEdge@2e55dd0c, se.su.inlupp.GraphEdge@346d61be, se.su.inlupp.GraphEdge@11bd0f3b, se.su.inlupp.GraphEdge@68c72235, se.su.inlupp.GraphEdge@62230c58, se.su.inlupp.GraphEdge@3d1cfad4, se.su.inlupp.GraphEdge@c333c60, se.su.inlupp.GraphEdge@2cd2a21f, se.su.inlupp.GraphEdge@10959ece, se.su.inlupp.GraphEdge@67080771, se.su.inlupp.GraphEdge@69e1dd28, se.su.inlupp.GraphEdge@59af0466, se.su.inlupp.GraphEdge@3a6bb9bf, se.su.inlupp.GraphEdge@65f095f8, se.su.inlupp.GraphEdge@1eb5174b, se.su.inlupp.GraphEdge@74455848, se.su.inlupp.GraphEdge@747edf66]
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:38)
 	at org.junit.jupiter.api.Assertions.fail(Assertions.java:138)
 	at se.su.inlupp.GraphTest.test14_graphToString(GraphTest.java:502)
@@ -52,37 +49,13 @@ org.opentest4j.AssertionFailedError: Någon båge saknas i toString: [se.su.inlu
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 
-se.su.inlupp.GraphTest.test15_edgeSetWeight -- Time elapsed: 0.002 s <<< FAILURE!
+se.su.inlupp.GraphTest.test15_edgeSetWeight -- Time elapsed: 0.001 s <<< FAILURE!
 org.opentest4j.AssertionFailedError: Fel: IllegalArgumentException borde ha kastats. ==> Expected java.lang.IllegalArgumentException to be thrown, but nothing was thrown.
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
 	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
 	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:39)
 	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3153)
 	at se.su.inlupp.GraphTest.test15_edgeSetWeight(GraphTest.java:516)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-
-se.su.inlupp.GraphTest.test20_dfs_findPath_existing -- Time elapsed: 0.001 s <<< ERROR!
-java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
-	at se.su.inlupp.DFSPathFinder.findPath(DFSPathFinder.java:7)
-	at se.su.inlupp.GraphTest.test20_dfs_findPath_existing(GraphTest.java:528)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-
-se.su.inlupp.GraphTest.test20_dfs_findPath_nonexisting -- Time elapsed: 0.001 s <<< ERROR!
-java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
-	at se.su.inlupp.DFSPathFinder.findPath(DFSPathFinder.java:7)
-	at se.su.inlupp.GraphTest.test20_dfs_findPath_nonexisting(GraphTest.java:542)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-
-se.su.inlupp.GraphTest.test20_dfs_findPath_direct -- Time elapsed: 0.001 s <<< ERROR!
-java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
-	at se.su.inlupp.DFSPathFinder.findPath(DFSPathFinder.java:7)
-	at se.su.inlupp.GraphTest.test20_dfs_findPath_direct(GraphTest.java:552)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
@@ -103,7 +76,7 @@ java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 
-se.su.inlupp.GraphTest.test21_bfs_findPath_shortest_by_edges -- Time elapsed: 0.001 s <<< ERROR!
+se.su.inlupp.GraphTest.test21_bfs_findPath_shortest_by_edges -- Time elapsed: 0 s <<< ERROR!
 java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
 	at se.su.inlupp.BFSPathFinder.findPath(BFSPathFinder.java:7)
 	at se.su.inlupp.GraphTest.test21_bfs_findPath_shortest_by_edges(GraphTest.java:590)
@@ -111,7 +84,7 @@ java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 
-se.su.inlupp.GraphTest.test21_bfs_findPath_direct -- Time elapsed: 0.001 s <<< ERROR!
+se.su.inlupp.GraphTest.test21_bfs_findPath_direct -- Time elapsed: 0 s <<< ERROR!
 java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
 	at se.su.inlupp.BFSPathFinder.findPath(BFSPathFinder.java:7)
 	at se.su.inlupp.GraphTest.test21_bfs_findPath_direct(GraphTest.java:604)
@@ -151,7 +124,7 @@ java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 
-se.su.inlupp.GraphTest.test22_path_toString -- Time elapsed: 0.001 s <<< ERROR!
+se.su.inlupp.GraphTest.test22_path_toString -- Time elapsed: 0 s <<< ERROR!
 java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
 	at se.su.inlupp.BFSPathFinder.findPath(BFSPathFinder.java:7)
 	at se.su.inlupp.GraphTest.test22_path_toString(GraphTest.java:679)
@@ -159,10 +132,10 @@ java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 
-se.su.inlupp.GraphTest.test23_strategy_pattern -- Time elapsed: 0.001 s <<< ERROR!
+se.su.inlupp.GraphTest.test23_strategy_pattern -- Time elapsed: 0 s <<< ERROR!
 java.lang.UnsupportedOperationException: Unimplemented method 'findPath'
-	at se.su.inlupp.DFSPathFinder.findPath(DFSPathFinder.java:7)
-	at se.su.inlupp.GraphTest.test23_strategy_pattern(GraphTest.java:695)
+	at se.su.inlupp.BFSPathFinder.findPath(BFSPathFinder.java:7)
+	at se.su.inlupp.GraphTest.test23_strategy_pattern(GraphTest.java:699)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
