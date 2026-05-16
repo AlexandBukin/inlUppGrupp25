@@ -57,24 +57,23 @@ public class ListGraph<T> implements Graph<T>, Iterable<T> {
   @Override
   public void setConnectionWeight(T node1, T node2, int weight) {
       //Looks nearly identical to disconnect, could use a help method!
-      if(!adjecencyListMap.containsKey(node1) || !adjecencyListMap.containsKey(node2)) {
-          throw new NoSuchElementException("Object does not exist!");
-      }
-      if(weight<0){
-          throw new IllegalArgumentException("Weight can not be lower than zero!");
-      }
-      for(Edge<T> edge1: adjecencyListMap.get(node1)) {
-          if(edge1.getDestination()==node2) {
-              edge1.setWeight(weight);
-              for(Edge<T> edge2: adjecencyListMap.get(node2)) {
-                  if (edge2.getDestination() == node1) {
-                      edge2.setWeight(weight);
-                      return;
-                  }
-              }
-          }
-      }
-      throw new NoSuchElementException("Found no edge between objects!");
+    if(!adjacencyList.containsKey(node1) || !adjacencyList.containsKey(node2)) {
+      throw new NoSuchElementException("Nod existerar inte");
+    }
+    if(weight < 0 ){
+      throw new IllegalArgumentException("Vikten får inte vara negativ");
+    }
+    Edge<T> edgeTo = getEdgeBetween(node1 , node2);
+    if(edgeTo == null){
+      throw new NoSuchElementException("Finns ingen kant");
+    }
+    edgeTo.setWeight(weight);
+
+    Edge<T> edgeBack = getEdgeBetween(node2 , node1);
+    if(edgeBack == null){
+      throw new NoSuchElementException("Finns ingen kant");
+    }
+    edgeBack.setWeight(weight); 
   }
 
   @Override
