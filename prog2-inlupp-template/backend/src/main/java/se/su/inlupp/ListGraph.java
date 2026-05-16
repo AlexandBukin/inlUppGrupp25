@@ -2,7 +2,7 @@ package se.su.inlupp;
 
 import java.util.*;
 
-public class ListGraph<T> implements Graph<T> {
+public class ListGraph<T> implements Graph<T>, Iterable<T> {
     Map<T, List<Edge<T>>> adjecencyListMap = new HashMap<>();
 
   @Override
@@ -44,21 +44,14 @@ public class ListGraph<T> implements Graph<T> {
 
   @Override
   public void disconnect(T node1, T node2) {
-      if(!adjecencyListMap.containsKey(node1) || !adjecencyListMap.containsKey(node2)) {
-          throw new NoSuchElementException("Object does not exist!");
-      }
-      for(Edge<T> edge1: adjecencyListMap.get(node1)) {
-          if(edge1.getDestination()==node2){
-              adjecencyListMap.get(node1).remove(edge1);
-              for(Edge<T> edge2: adjecencyListMap.get(node2)) {
-                  if(edge2.getDestination()==node1){
-                      adjecencyListMap.get(node2).remove(edge2);
-                      return;
-                  }
-              }
-          }
-      }
-      throw new IllegalStateException("Found no edge between objects!");
+    if(!adjacencyList.containsKey(node1) || !adjacencyList.containsKey(node2)) {
+    throw new NoSuchElementException("Nod existerar inte");
+  }
+    if(getEdgeBetween(node1 , node2) == null){
+      throw new IllegalStateException("Det finns ingen kant mellan " + node1 + "och" + node2);
+    }
+    adjacencyList.get(node1).removeIf(edge -> edge.getDestination().equals(node2));
+    adjacencyList.get(node2).removeIf(edge -> edge.getDestination().equals(node1));
   }
 
   @Override
@@ -118,7 +111,12 @@ public class ListGraph<T> implements Graph<T> {
 
     @Override
     public String toString() {
-        return ""+adjecencyListMap;
+            StringBuilder sb = new StringBuilder();
+    for(T n : adjacencyList.keySet()){
+      sb.append(n).append(adjacencyList.get(n));
+      sb.append('\n');
+    }
+    return sb.toString();
     }
 }
 
