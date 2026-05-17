@@ -5,20 +5,20 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class GraphPath<T> implements Path<T>{
-
+public class GraphPath<T> implements Path<T> {
+    
     T startNode;
     T endNode;
     List<Edge<T>> edges = new ArrayList<>();
     List<T> nodes = new ArrayList<>();
 
-    public GraphPath(T start, T end, List<Edge<T>> thePath){
-        this.startNode = start;
-        this.endNode = end;
-        this.edges = thePath;
+    public GraphPath(T startNode, T endNode, List<Edge<T>> path) {
+        this.startNode = startNode;
+        this.endNode = endNode;
+        this.edges = path;
 
-        nodes.add(start);
-        for(Edge<T> edge: thePath) {
+        nodes.add(startNode);
+        for (Edge<T> edge : path) {
             nodes.add(edge.getDestination());
         }
     }
@@ -36,7 +36,7 @@ public class GraphPath<T> implements Path<T>{
     @Override
     public int getTotalWeight() {
         int totalWeight = 0;
-        for(Edge<T> edge: getEdges()) {
+        for (Edge<T> edge : getEdges()) {
             totalWeight += edge.getWeight();
         }
         return totalWeight;
@@ -47,6 +47,7 @@ public class GraphPath<T> implements Path<T>{
         return Collections.unmodifiableList(edges);
     }
 
+
     @Override
     public List<T> getNodes() {
         return Collections.unmodifiableList(nodes);
@@ -54,9 +55,12 @@ public class GraphPath<T> implements Path<T>{
 
     @Override
     public Iterator<Edge<T>> iterator() {
-            return getEdges().iterator();
+        return edges.iterator();
     }
-    public String toString(){
-        return "Start: "+startNode+" End: "+endNode+" Path:\n"+(getNodes())+"\nTotal Weight: "+getTotalWeight();
+
+    @Override
+    public String toString() {
+        return "Start: " + startNode + " End: " + endNode + " (Path: " + getNodes() + ") " + "(Total Weight: " + getTotalWeight() + ")";
     }
+
 }
