@@ -1,38 +1,38 @@
 package se.su.inlupp;
 
-import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.*;
 
 public class DFSPathFinder<T> implements PathFinder<T> {
 
-    HashSet<T> visitedNodes = new HashSet<>();
 
     @Override
     public Path<T> findPath(Graph<T> graph, T from, T to) {
-        visitedNodes.clear();
-        LinkedList<Edge<T>> result = dfs(graph, from, to);
-        if (result == null) {
-            System.out.println("No Path Found!");
-            return null;
+        List<Edge<T>> savedEdges = new ArrayList<>();
+        HashSet<T> visitedNodes = new HashSet<>();
+        if(dfs(graph, from, to, visitedNodes, savedEdges)){
+            return new PathImpl<>(from , savedEdges);
         }
-        return new GraphPath<>(from, to, result);
+        return null;
     }
-    private LinkedList<Edge<T>> dfs(Graph<T> graph, T current, T target) {
-        if (current.equals(target)) {
-            return new LinkedList<>();
-        }
+
+    public boolean dfs(Graph<T> graph, T current, T target, Set<T> visitedNodes, List<Edge<T>> savedEdges) {
         visitedNodes.add(current);
-        for (Edge<T> edge : graph.getEdgesFrom(current)) {
-            T next = edge.getDestination();
-            if (!visitedNodes.contains(next)) {
-                LinkedList<Edge<T>> path = dfs(graph, next, target);
-                if (path != null) {
-                    path.addFirst(edge);
-                    return path;
+        if (current.equals(target)) {
+            return true;
+        } else {
+
+            for (Edge<T> edge : graph.getEdgesFrom(current)) {
+                if (!visitedNodes.contains(edge.getDestination())) {
+                    savedEdges.add(edge);
+                    if (dfs(graph, edge.getDestination(), target, visitedNodes, savedEdges)) {
+                        return true;
+                    } else {
+                        savedEdges.remove(edge);
+                    }
                 }
             }
         }
-        return null;
+        return false;
     }
 }
 

@@ -2,43 +2,49 @@ package se.su.inlupp;
 
 import java.util.*;
 
+
 public class BFSPathFinder<T> implements PathFinder<T> {
 
-  @Override
-  public Path<T> findPath(Graph<T> graph, T from, T to) {
 
-      HashSet<T> visitedNodes = new HashSet<>();
-      LinkedList<T> queue = new LinkedList<>();
-      Map<T, T> parent = new HashMap<>();
+    @Override
+    public Path<T> findPath(Graph<T> graph, T from, T to) {
+        Map<T, Edge<T>> cameFrom = new HashMap<>();
+        Queue<T> queue = new LinkedList<>();
+        Set<T> visitedNodes = new HashSet<>();
+        Map<T, T> previous = new HashMap<>();
+        List<Edge<T>> path = new ArrayList<>();
 
-      queue.add(from);
-      visitedNodes.add(from);
-      while(!queue.isEmpty()) {
+        queue.add(from);
+        visitedNodes.add(from);
 
-          T current = queue.poll();
-          if(current.equals(to)){
-              LinkedList<Edge<T>> path = new LinkedList<>();
-              T node = to;
+        while (!queue.isEmpty()) {
+            T current = queue.poll(); //tar ut första elementet
+            if (current.equals(to)) {
+                T reconstruct = to;
+                while (!reconstruct.equals(from)) {
+                    Edge<T> edge = cameFrom.get(reconstruct);
+                    path.add(edge);
+                    reconstruct = previous.get(reconstruct);
+                }
+                Collections.reverse(path);
+                return new PathImpl<>(from, path);
+            }
+            for (Edge<T> edge : graph.getEdgesFrom(current)) {
+                T neighbor = edge.getDestination();
+                if (!visitedNodes.contains(neighbor)) {
+                    visitedNodes.add(neighbor);
+                    queue.add(neighbor);
+                    cameFrom.put(neighbor, edge);
+                    previous.put(neighbor, current);
+                }
 
-              while (!node.equals(from)) {
-                  T prev = parent.get(node);
-                  Edge<T> edge = graph.getEdgeBetween(prev, node);
-                  path.addFirst(edge);
-                  node = prev;
-              }
+            }
 
-              return new GraphPath<>(from, to, path);
-          }
+        }
+        return null;
 
-          for(Edge<T> edge: graph.getEdgesFrom(current)) {
-              if(!visitedNodes.contains(edge.getDestination())){
-                  queue.add(edge.getDestination());
-                  parent.put(edge.getDestination(), current);
-                  visitedNodes.add(edge.getDestination());
-              }
-          }
-      }
-      return null;
-  }
+    }
+
+
 }
 

@@ -1,9 +1,9 @@
-se\su\inlupp\GraphPath.class
 se\su\inlupp\Path.class
 se\su\inlupp\PathFinder.class
+se\su\inlupp\PathImpl.class
 se\su\inlupp\BFSPathFinder.class
 se\su\inlupp\Graph.class
-se\su\inlupp\GraphEdge.class
 se\su\inlupp\ListGraph.class
 se\su\inlupp\Edge.class
 se\su\inlupp\DFSPathFinder.class
+se\su\inlupp\EdgeImpl.class

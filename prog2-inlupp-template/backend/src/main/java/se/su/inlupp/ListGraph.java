@@ -2,44 +2,47 @@ package se.su.inlupp;
 
 import java.util.*;
 
-public class ListGraph<T> implements Graph<T>, Iterable<T> {
-    Map<T, List<Edge<T>>> adjecencyListMap = new HashMap<>();
+public class ListGraph<T> implements Graph<T> , Iterable<T>{
+  private Map<T , List<Edge<T>>> adjacencyList;
+
+  public ListGraph(){
+    adjacencyList = new HashMap<>();
+  }
 
   @Override
   public void add(T node) {
-    adjecencyListMap.putIfAbsent(node, new ArrayList<>());
+    adjacencyList.computeIfAbsent(node , k -> new ArrayList<>());
   }
 
   @Override
   public void remove(T node) {
-      if (!adjecencyListMap.containsKey(node)) {
-          throw new NoSuchElementException("Graph has no such element!");
-      }
-      for(T t: adjecencyListMap.keySet()){
-              adjecencyListMap.get(t).removeIf(edge -> edge.getDestination().equals(node));
-          }
-      adjecencyListMap.remove(node);
+    if(!adjacencyList.containsKey(node)){
+      throw new NoSuchElementException("Denna nod finns inte.");
+    }
+    for(T n : adjacencyList.keySet()){
+      adjacencyList.get(n).removeIf(edge -> edge.getDestination().equals(node));
+    }
+    adjacencyList.remove(node);
   }
 
   @Override
   public boolean hasNode(T node) {
-      return adjecencyListMap.containsKey(node);
+    return adjacencyList.containsKey(node);
   }
 
   @Override
   public void connect(T node1, T node2, String name, int weight) {
-      if(!adjecencyListMap.containsKey(node1) || !adjecencyListMap.containsKey(node2)) {
-          throw new NoSuchElementException("Graph does not contain this object!");
-      }
-      if(weight<0) {
-          throw new IllegalArgumentException("Weight can not be negative!");
-      }
-      //Keep an eye on this below, might break?
-      if(getEdgeBetween(node1,node2)!=null){
-          throw new IllegalStateException("Edge already exists!");
-      }
-      adjecencyListMap.get(node1).add(new GraphEdge<>(weight,name,node2));
-      adjecencyListMap.get(node2).add(new GraphEdge<>(weight,name,node1));
+    if(!adjacencyList.containsKey(node1) || !adjacencyList.containsKey(node2)){
+      throw new NoSuchElementException("Denna nod finns inte.");
+    }
+    if (weight < 0) {
+      throw new IllegalArgumentException("Vikt får inte vara negativt");
+    }
+    if(getEdgeBetween(node1 , node2) != null){
+      throw new IllegalStateException("Kanten redan finns!");
+    }
+    adjacencyList.get(node1).add(new EdgeImpl<>(node2 , name , weight));
+    adjacencyList.get(node2).add(new EdgeImpl<>(node1 , name , weight));
   }
 
   @Override
@@ -52,11 +55,11 @@ public class ListGraph<T> implements Graph<T>, Iterable<T> {
     }
     adjacencyList.get(node1).removeIf(edge -> edge.getDestination().equals(node2));
     adjacencyList.get(node2).removeIf(edge -> edge.getDestination().equals(node1));
+
   }
 
   @Override
   public void setConnectionWeight(T node1, T node2, int weight) {
-      //Looks nearly identical to disconnect, could use a help method!
     if(!adjacencyList.containsKey(node1) || !adjacencyList.containsKey(node2)) {
       throw new NoSuchElementException("Nod existerar inte");
     }
@@ -73,49 +76,50 @@ public class ListGraph<T> implements Graph<T>, Iterable<T> {
     if(edgeBack == null){
       throw new NoSuchElementException("Finns ingen kant");
     }
-    edgeBack.setWeight(weight); 
+    edgeBack.setWeight(weight);
   }
 
   @Override
   public Set<T> getNodes() {
-      return new HashSet<>(adjecencyListMap.keySet());
+    HashSet<T> kopior = new HashSet<>();
+    kopior.addAll(adjacencyList.keySet());
+    return kopior;
   }
 
   @Override
   public Collection<Edge<T>> getEdgesFrom(T node) {
-      if(!adjecencyListMap.containsKey(node)) {
-          throw new NoSuchElementException("Object was not found!");
-      }
-      return new ArrayList<>(adjecencyListMap.get(node));
+    if(!adjacencyList.containsKey(node)){
+      throw new NoSuchElementException("Denna nod finns inte :" + node);
+    }
+    return new ArrayList<>(adjacencyList.get(node));
   }
 
   @Override
   public Edge<T> getEdgeBetween(T node1, T node2) {
-      //Similar to setConnectionWeight and disconnect, could maybe use similar help method?
-      if (!adjecencyListMap.containsKey(node1) || !adjecencyListMap.containsKey(node2)) {
-          throw new NoSuchElementException("Object does not exist!");
+    if(!adjacencyList.containsKey(node1) || !adjacencyList.containsKey(node2)){
+    throw new NoSuchElementException("Nod existerar inte");
+    }
+    for(Edge edge : adjacencyList.get(node1)){
+      if(edge.getDestination().equals(node2)){
+        return edge;
       }
-      for (Edge<T> edge : adjecencyListMap.get(node1)) {
-          if (edge.getDestination() == node2) {
-              return edge;
-          }
-      }
-      return null;
+    }
+    return null;
   }
 
   @Override
   public Iterator<T> iterator() {
-      return adjecencyListMap.keySet().iterator();
+     return adjacencyList.keySet().iterator();
   }
 
-    @Override
-    public String toString() {
-            StringBuilder sb = new StringBuilder();
+  @Override
+  public String toString(){
+    StringBuilder sb = new StringBuilder();
     for(T n : adjacencyList.keySet()){
       sb.append(n).append(adjacencyList.get(n));
       sb.append('\n');
     }
     return sb.toString();
-    }
+  }
 }
 

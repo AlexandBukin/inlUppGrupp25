@@ -15,6 +15,7 @@ public class Gui extends Application {
     String javafxVersion = System.getProperty("javafx.version");
     Label label =
         new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
+
     VBox root = new VBox(30, label);
     root.setAlignment(Pos.CENTER);
     Scene scene = new Scene(root, 640, 480);
