@@ -1,6 +1,6 @@
 package se.su.inlupp;
 
-import java.util.Objects;
+import java.util.*;
 
 public class City {
     private String name;
@@ -21,12 +21,12 @@ public class City {
         return x;
     }
 
-    public double getY() {
-        return y;
-    }
-
     public void setX(double x) {
         this.x = x;
+    }
+
+    public double getY() {
+        return y;
     }
 
     public void setY(double y) {
@@ -35,10 +35,9 @@ public class City {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
+        if (this == (obj)) {
             return true;
         }
-
         if (!(obj instanceof City)) {
             return false;
         }
@@ -64,5 +63,6 @@ public class City {
         sb.append('\n');
         sb.append(y);
         return sb.toString();
+
     }
 }
