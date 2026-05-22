@@ -25,11 +25,20 @@ public class City {
         return y;
     }
 
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
     @Override
     public boolean equals(Object obj) {
-        if (this.equals(obj)) {
+        if (this == obj) {
             return true;
         }
+
         if (!(obj instanceof City)) {
             return false;
         }
@@ -44,5 +53,16 @@ public class City {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(name);
+        sb.append('\n');
+        sb.append(x);
+        sb.append('\n');
+        sb.append(y);
+        return sb.toString();
     }
 }
