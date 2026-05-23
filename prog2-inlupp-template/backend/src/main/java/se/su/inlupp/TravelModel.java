@@ -24,6 +24,64 @@ public class TravelModel {
         //Lägg till det i alla dessa metoder, plus en getter isUnsavedChanges()!
     }
 
+        public void saveToFile(String filePath) throws IOException {
+            try (PrintWriter pw = new PrintWriter(filePath)) {
+            pw.println(imagePath);
+            for (City city : getCitys()) {
+                pw.println(city + ";" + city.getX() + ";" + city.getY());
+
+            }
+            pw.println("---");
+            for (City city : getCitys()) {
+                for (Edge<City> edge : getCitysFrom(city)) {
+                    pw.println(city.getName() + ';' + edge.getDestination() + ';' + edge.getName() + ';' + edge.getWeight());
+                }
+            }
+
+
+        }
+    }
+
+    public void loadFromFile(String filePath) throws IOException {
+        try (Scanner scanner = new Scanner(new File(filePath))) {
+            this.imagePath = scanner.nextLine();
+            cityListGraph = new ListGraph<>();
+            String line = scanner.nextLine();
+            while (!line.equals("---")) {
+                String[] cityInfo = line.split(";");
+                String cityName = cityInfo[0];
+                double cityXpos = Double.parseDouble(cityInfo[1]);
+                double cityYpos = Double.parseDouble(cityInfo[2]);
+                City city = new City(cityName, cityXpos, cityYpos);
+                cityListGraph.add(city);
+                line = scanner.nextLine();
+            }
+            while (scanner.hasNextLine()) {
+                line = scanner.nextLine();
+                String[] edgeInfo = line.split(";");
+                String cityName = edgeInfo[0];
+                String destination = edgeInfo[1];
+                String routeName = edgeInfo[2];
+                int routePrice = Integer.parseInt(edgeInfo[3]);
+
+                connectCity(findCityByName(cityName), findCityByName(destination), routeName, routePrice);
+
+
+            }
+
+        }
+
+    }
+
+    public City findCityByName(String name) {
+        for (City city : getCitys()) {
+            if (city.getName().equals(name)) {
+                return city;
+            }
+        }
+        return null; // null hantering kan behövas åtgärdas.
+    }
+
     public void setCityPathFinder(PathFinder<City> pathFinder) {
         this.cityPathFinder = pathFinder;
 
