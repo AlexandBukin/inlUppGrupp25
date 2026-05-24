@@ -11,6 +11,9 @@ public class InteractionControl {
 
     Circle circle;
     double startX,startY;
+    public InteractionControl(){
+
+    }
 
     public void interactableCity(TravelModel travelModel, City city, Pane center) {
         Circle circle = new Circle(city.getX(), city.getY(), 5, Color.BLUE);
@@ -21,7 +24,7 @@ public class InteractionControl {
         cityName.layoutYProperty().bind(circle.centerYProperty());
 
         circle.setOnMousePressed(new StartDragHandler(circle));
-        circle.setOnMouseDragged(new DragHandler(circle));
+        circle.setOnMouseDragged(new DragHandler(circle,city));
 
         center.getChildren().addAll(cityName, circle);
         center.setOnMouseClicked(null);
@@ -45,9 +48,11 @@ public class InteractionControl {
     class DragHandler implements EventHandler<MouseEvent> {
 
         private Circle circle;
+        private City city;
 
-        public DragHandler(Circle circle) {
+        public DragHandler(Circle circle, City city) {
             this.circle = circle;
+            this.city = city;
         }
 
         @Override
@@ -56,6 +61,8 @@ public class InteractionControl {
             double newY = circle.getLayoutY() + event.getY() - startY;
             circle.setCenterX(newX);
             circle.setCenterY(newY);
+            city.setX(newX);
+            city.setY(newY);
         }
     }
 }
