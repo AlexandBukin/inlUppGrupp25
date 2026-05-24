@@ -1,17 +1,17 @@
 package se.su.inlupp;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
+import java.util.Optional;
 
 
 public class Gui extends Application {
@@ -19,30 +19,72 @@ public class Gui extends Application {
     TravelModel travelModel = new TravelModel();
     Pane center = new Pane();
 
-  public void start(Stage stage) {
-    BorderPane root = new BorderPane();
-    FlowPane top = new FlowPane();
-    root.setTop(top);
-    root.setCenter(center);
-    top.setBackground(Background.fill(Color.BLUE));
-    InteractionControl interactionControl = new InteractionControl(travelModel, center);
+    public void start(Stage stage) {
+        Graph<String> graph = new ListGraph<String>();
+        BorderPane root = new BorderPane();
+        FlowPane top = new FlowPane();
+        root.setTop(top);
+        root.setCenter(center);
+        Scene scene = new Scene(root , 640 , 480);
 
-    Scene scene = new Scene(root , 640 , 480);
+        Label label = new Label();
+        Button fileButton = new Button("Välj fil");
+        fileButton.setOnAction(e ->{
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Välj en fil");
+            File file = fileChooser.showOpenDialog(stage);
+            if(file != null) {
+                label.setText("Vald fil: " + file.getName());
+            }
+        });
 
-    Label label = new Label();
-    Button fileButton = new Button("Välj fil");
-    fileButton.setOnAction(e -> interactionControl.loadFile(stage, label));
+        Button addCityBtn = new Button("Lägg till stad");
+        addCityBtn.setOnAction(e -> {
+            center.setOnMouseClicked(mouseEvent -> {
+                double x = mouseEvent.getSceneX();
+                double y = mouseEvent.getSceneY();
+                TextInputDialog dialog = new TextInputDialog();
+                dialog.setTitle("Lägg till stad");
+                dialog.setHeaderText("Ange stadens namn");
+                Optional<String> result = dialog.showAndWait();
+                if(result.isEmpty()){
+                    center.setOnMouseClicked(null);
+                }
+                if(result.isPresent()) {
+                    String name = result.get();
+                    City city = new City(name, x, y);
+                    if (name.isEmpty() || travelModel.findCityByName(name) != null) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Fel");
+                        alert.setContentText("Stad namn inte giltigt eller redan finns");
+                        alert.showAndWait();
+                        center.setOnMouseClicked(null);
+                    } else {
+                        travelModel.addCity(city);
+                        addCityToGUI(travelModel, city, center);
+                    }
+                }
+            });
+        });
+        top.getChildren().addAll(addCityBtn, fileButton);
+        center.getChildren().addAll(label);
+        stage.setScene(scene);
+        stage.show();
+    }
 
-    Button addCityBtn = new Button("Lägg till stad");
-    addCityBtn.setOnAction(e -> interactionControl.addCityClicked());
-      
-    top.getChildren().addAll(addCityBtn, fileButton);
-    center.getChildren().addAll(label);
-    stage.setScene(scene);
-    stage.show();
-  }
+    private void addCityToGUI(TravelModel travelModel, City city, Pane center) {
 
-  public static void main(String[] args) {
-    launch(args);
-  }
-} 
+        InteractionControl interactionControl = new InteractionControl();
+        interactionControl.interactableCity(travelModel, city, center);
+    }
+
+    public void redrawGraph() {
+        for (City city : travelModel.getCitys()) {
+            addCityToGUI(travelModel,city,center);
+        }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
