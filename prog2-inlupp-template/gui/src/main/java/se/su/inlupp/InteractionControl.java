@@ -1,57 +1,61 @@
 package se.su.inlupp;
 
-import java.io.File;
-
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-
 
 public class InteractionControl {
-    private TravelModel travelModel;
-    private Pane center;
 
-    public InteractionControl(TravelModel travelModel, Pane center) {
-        this.travelModel = travelModel;
-        this.center = center;
+    Circle circle;
+    double startX,startY;
+
+    public void interactableCity(TravelModel travelModel, City city, Pane center) {
+        Circle circle = new Circle(city.getX(), city.getY(), 5, Color.BLUE);
+        Label cityName = new Label(city.getName());
+        cityName.setLayoutX(city.getX() + 20);
+        cityName.setLayoutY(city.getY() - 10);
+        cityName.layoutXProperty().bind(circle.centerXProperty());
+        cityName.layoutYProperty().bind(circle.centerYProperty());
+
+        circle.setOnMousePressed(new StartDragHandler(circle));
+        circle.setOnMouseDragged(new DragHandler(circle));
+
+        center.getChildren().addAll(cityName, circle);
+        center.setOnMouseClicked(null);
     }
 
-    public void loadFromFile(Stage stage, Label label) {
-      FileChooser fileChooser = new FileChooser();
-      fileChooser.setTitle("Välj en fil");
-      File file = fileChooser.showOpenDialog(stage);
-      if(file != null) {
-        label.setText("Vald fil: " + file.getName());
-      }
+    class StartDragHandler implements EventHandler<MouseEvent> {
+
+        private Circle circle;
+
+        public StartDragHandler(Circle circle) {
+            this.circle = circle;
+        }
+
+        @Override
+        public void handle(MouseEvent event) {
+            startX = circle.getLayoutX();
+            startY = circle.getLayoutY();
+        }
     }
 
-    public void addCityClicked() {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Lägg till stad");
-        dialog.setHeaderText("Ange stadens namn");
-        dialog.showAndWait();
-        String name = dialog.getEditor().getText();
+    class DragHandler implements EventHandler<MouseEvent> {
 
-        center.setOnMouseClicked(mouseEvent -> {
-          double x = mouseEvent.getX();
-          double y = mouseEvent.getY();
-          
-          travelModel.addCity(new City(name, x, y));
-        
-          Circle circle = new Circle(x, y, 10, Color.BLUE);
-          Label label = new Label(name);
-          label.setLayoutX(x + 15);
-          label.setLayoutY(y - 10);
+        private Circle circle;
 
-          center.getChildren().addAll(circle, label);
-          center.setOnMouseClicked(null);
+        public DragHandler(Circle circle) {
+            this.circle = circle;
+        }
 
-        });
+        @Override
+        public void handle(MouseEvent event) {
+            double newX = circle.getLayoutX() + event.getX() - startX;
+            double newY = circle.getLayoutY() + event.getY() - startY;
+            circle.setCenterX(newX);
+            circle.setCenterY(newY);
+        }
     }
 }
-
-
