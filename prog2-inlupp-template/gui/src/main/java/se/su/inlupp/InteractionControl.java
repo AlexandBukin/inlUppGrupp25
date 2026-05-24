@@ -29,7 +29,10 @@ public class InteractionControl {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Lägg till stad");
         dialog.setHeaderText("Ange stadens namn");
-        dialog.showAndWait();
+        Optional<String> result = dialog.showAndWait();
+        if(result.isEmpty()){
+          dialog.close();
+        }
         String name = dialog.getEditor().getText();
         //Dialog hantering
 
