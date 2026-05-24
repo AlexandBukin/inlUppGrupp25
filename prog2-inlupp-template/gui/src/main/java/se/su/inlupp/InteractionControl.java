@@ -8,12 +8,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 public class InteractionControl {
-
-    Circle circle;
+    
     double startX,startY;
-    public InteractionControl(){
-
-    }
 
     public void interactableCity(TravelModel travelModel, City city, Pane center) {
         Circle circle = new Circle(city.getX(), city.getY(), 5, Color.BLUE);
