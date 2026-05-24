@@ -1,18 +1,60 @@
 package se.su.inlupp;
 
+import java.io.File;
+
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class InteractionControl {
-    
-    double startX,startY;
+
+    double startX, startY;
+    private Pane center;
+    private TravelModel travelModel;
+
+    public InteractionControl(TravelModel travelModel, Pane center) {
+      this.travelModel = travelModel;
+      this.center = center;
+    }
+
+    public void addCityClicked() {
+
+        //Dialog hantering
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Lägg till stad");
+        dialog.setHeaderText("Ange stadens namn");
+        dialog.showAndWait();
+        String name = dialog.getEditor().getText();
+        //Dialog hantering
+
+        center.setOnMouseClicked(MouseEvent -> {
+          double x = MouseEvent.getX();
+          double y = MouseEvent.getY();
+          City city = new City(name, x, y);
+          travelModel.addCity(city);
+          interactableCity(travelModel, city, center);
+          center.setOnMouseClicked(null);
+      });
+    }
+
+    public void loadFile(Stage stage, Label label) {
+      FileChooser fileChooser = new FileChooser();
+      fileChooser.setTitle("Välj en fil");
+      File file = fileChooser.showOpenDialog(stage);
+      
+      if(file != null) {
+        label.setText("Vald fil: " + file.getName());
+      }
+    }
 
     public void interactableCity(TravelModel travelModel, City city, Pane center) {
-        Circle circle = new Circle(city.getX(), city.getY(), 5, Color.BLUE);
+        Circle circle = new Circle(city.getX(), city.getY(), 6, Color.BLUE);
         Label cityName = new Label(city.getName());
         cityName.setLayoutX(city.getX() + 20);
         cityName.setLayoutY(city.getY() - 10);
