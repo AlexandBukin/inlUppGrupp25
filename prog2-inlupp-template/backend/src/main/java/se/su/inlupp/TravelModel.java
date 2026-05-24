@@ -1,6 +1,5 @@
 package se.su.inlupp;
 
-import org.w3c.dom.Text;
 
 import java.awt.*;
 import java.io.File;
@@ -8,8 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.Set;
 
 public class TravelModel {
@@ -20,35 +19,39 @@ public class TravelModel {
 
     public TravelModel() {
         cityListGraph = new ListGraph<>();
-        unsavedChanges = false; // VIKTIGT ! behöver sätta till false varje gång vi spara i Användargränssnittet.
-        //Lägg till det i alla dessa metoder, plus en getter isUnsavedChanges()!
+        unsavedChanges = false; // VIKTIGT ! behöver sätta till false varje gång vi sparar i Användargränssnittet.
+        //Lägg till det i alla dessa metoder, plus en getter hasUnsavedChanges()! //Tror jag har fixat det! -Alex
     }
 
-        public void saveToFile(String filePath) throws IOException {
-            try (PrintWriter pw = new PrintWriter(filePath)) {
+    public void saveToFile(String filePath) {
+        try{
+            PrintWriter pw = new PrintWriter(filePath);
             pw.println(imagePath);
-            for (City city : getCitys()) {
-                pw.println(city + ";" + city.getX() + ";" + city.getY());
+                for (City city : getCitys()) {
+                    pw.println(city.getName() + ";" + city.getX() + ";" + city.getY());
 
-            }
-            pw.println("---");
-            for (City city : getCitys()) {
-                for (Edge<City> edge : getCitysFrom(city)) {
-                    pw.println(city.getName() + ';' + edge.getDestination() + ';' + edge.getName() + ';' + edge.getWeight());
                 }
-            }
-
-
+                pw.println("---");
+                for (City city : getCitys()) {
+                    for (Edge<City> edge : getCitysFrom(city)) {
+                        pw.println(city.getName() + ';' + edge.getDestination() + ';' + edge.getName() + ';' + edge.getWeight());
+                    }
+                    pw.close();
+                    unsavedChanges = false;
+                }
+        }catch(FileNotFoundException e) {
+            System.err.print("Kunde inte hitta filen! (se till att det är en text fil)");
         }
     }
 
-    public void loadFromFile(String filePath) throws IOException {
-        try (Scanner scanner = new Scanner(new File(filePath))) {
+    public void loadFromFile(String filePath) {
+        try{ Scanner scanner = new Scanner(new File(filePath));
             this.imagePath = scanner.nextLine();
             cityListGraph = new ListGraph<>();
             String line = scanner.nextLine();
             while (!line.equals("---")) {
-                String[] cityInfo = line.split(";");
+                String[] cityInfo;
+                cityInfo = line.split(";");
                 String cityName = cityInfo[0];
                 double cityXpos = Double.parseDouble(cityInfo[1]);
                 double cityYpos = Double.parseDouble(cityInfo[2]);
@@ -65,11 +68,13 @@ public class TravelModel {
                 int routePrice = Integer.parseInt(edgeInfo[3]);
 
                 connectCity(findCityByName(cityName), findCityByName(destination), routeName, routePrice);
-
-
             }
 
-        }
+        }catch(FileNotFoundException e){
+            System.err.print("Hittade inte filen!");
+        }catch(IOException e){
+        System.err.print("IO-fel upstod!");
+    }
 
     }
 
@@ -98,10 +103,9 @@ public class TravelModel {
         unsavedChanges = true;
     }
 
-
-
-
-
+    public boolean hasUnsavedChanges(){
+        return unsavedChanges;
+    }
     public void addCity(City city) {
         cityListGraph.add(city);
         unsavedChanges = true;
