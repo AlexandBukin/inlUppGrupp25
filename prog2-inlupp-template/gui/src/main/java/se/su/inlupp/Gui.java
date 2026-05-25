@@ -2,11 +2,8 @@ package se.su.inlupp;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
@@ -15,9 +12,9 @@ import java.util.Optional;
 
 public class Gui extends Application {
 
-    TravelModel travelModel = new TravelModel();
-    Pane center = new Pane();
     Stage stage;
+    TravelModel travelModel = new TravelModel();
+    Map center = new Map(stage);
 
     public void start(Stage stage) {
         this.stage = stage;
@@ -58,12 +55,7 @@ public class Gui extends Application {
 
         Button addMapButton = new Button("Välj kartbild");
         addMapButton.setOnAction(e ->{
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Välj en fil");
-            File file = fileChooser.showOpenDialog(stage);
-            String imagePath = file.getAbsolutePath();
-            travelModel.setImagePath(imagePath);
-            addMapToGUI(imagePath);
+            center.promptImagePath(stage, travelModel);
         });
 
         Button addCityBtn = new Button("Lägg till stad");
@@ -100,14 +92,6 @@ public class Gui extends Application {
         stage.show();
     }
 
-    private void addMapToGUI(String imagePath) {
-        Image map = new Image(new File(imagePath).toURI().toString());
-        ImageView mapView = new ImageView(map);
-        mapView.fitHeightProperty().bind(stage.heightProperty());
-        mapView.fitWidthProperty().bind(stage.widthProperty());
-        center.getChildren().addFirst(mapView); //Kommer inte att skriva över förra bild om man vill ändra! Fixa!!!
-    }
-
     private void addCityToGUI(TravelModel travelModel, City city) {
         InteractionControl interactionControl = new InteractionControl();
         interactionControl.interactableCity(travelModel, city, center);
@@ -115,10 +99,11 @@ public class Gui extends Application {
 
     private void redrawGraph() {
         center.getChildren().clear();
+        center.hasImage = false;
         for (City city : travelModel.getCitys()) {
             addCityToGUI(travelModel,city);
         }
-        addMapToGUI(travelModel.getImagePath());
+        center.addMapImage(stage, travelModel.getImagePath());
     }
     private String getFilePath(){
         FileChooser fileChooser = new FileChooser();
