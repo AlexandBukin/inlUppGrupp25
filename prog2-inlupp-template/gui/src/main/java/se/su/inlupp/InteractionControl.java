@@ -8,7 +8,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,13 +16,12 @@ import java.util.Set;
 
 public class InteractionControl {
 
-
     private final HashMap<City, Circle> cityCircleMap = new HashMap<>();
     private final HashMap<City, Label> cityToLabel = new HashMap<>();
     private final HashMap<City, Set<Line>> cityLines = new HashMap<>();
     double startX, startY;
-    private TravelModel travelModel;
-    private Pane center;
+    private final TravelModel travelModel;
+    private final Pane center;
 
     public InteractionControl(TravelModel travelModel, Pane center) {
         this.travelModel = travelModel;
@@ -45,7 +43,6 @@ public class InteractionControl {
             if (result.isPresent()) {
                 String name = result.get();
                 City city = new City(name, x, y);
-
                 if (name.isEmpty() || travelModel.findCityByName(name) != null) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Fel");
@@ -69,7 +66,6 @@ public class InteractionControl {
             circle.setOnMouseClicked(e -> {
                 Set<Line> lines = cityLines.get(city);
                 if (lines != null) {
-
                     center.getChildren().removeAll(lines);
                     cityLines.remove(city);
                 }
@@ -77,13 +73,9 @@ public class InteractionControl {
                 cityCircleMap.remove(city);
                 travelModel.removeCity(city);
                 center.getChildren().removeAll(label, circle);
-
             });
             center.setOnMouseClicked(null);
-
         }
-
-
     }
 
     public void clearMaps() {
@@ -152,14 +144,7 @@ public class InteractionControl {
                 } else {
                     try {
                         travelModel.connectCity(cityFrom, cityTo, flyglinje.getText(), Integer.parseInt(pris.getText()));
-                        Line line = new Line(cityFrom.getX(), cityFrom.getY(), cityTo.getX(), cityTo.getY());
-                        cityLines.computeIfAbsent(cityFrom, k -> new HashSet<>()).add(line);
-                        cityLines.computeIfAbsent(cityTo, k -> new HashSet<>()).add(line);
-                        line.endXProperty().bind(cityCircleMap.get(cityFrom).centerXProperty());
-                        line.endYProperty().bind(cityCircleMap.get(cityFrom).centerYProperty());
-                        line.startXProperty().bind(cityCircleMap.get(cityTo).centerXProperty());
-                        line.startYProperty().bind(cityCircleMap.get(cityTo).centerYProperty());
-                        center.getChildren().add(1, line);
+                    drawLine(cityFrom, cityTo, flyglinje.getText(), Integer.parseInt(pris.getText()));
                     } catch (NumberFormatException e) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Pris error");
@@ -169,10 +154,18 @@ public class InteractionControl {
                 }
 
             }
-
         }
+    }
 
-
+    public void drawLine(City cityFrom, City cityTo, String flyglinje, int pris) {
+            Line line = new Line(cityFrom.getX(), cityFrom.getY(), cityTo.getX(), cityTo.getY());
+            cityLines.computeIfAbsent(cityFrom, k -> new HashSet<>()).add(line);
+            cityLines.computeIfAbsent(cityTo, k -> new HashSet<>()).add(line);
+            line.endXProperty().bind(cityCircleMap.get(cityFrom).centerXProperty());
+            line.endYProperty().bind(cityCircleMap.get(cityFrom).centerYProperty());
+            line.startXProperty().bind(cityCircleMap.get(cityTo).centerXProperty());
+            line.startYProperty().bind(cityCircleMap.get(cityTo).centerYProperty());
+            center.getChildren().add(1, line);
     }
 
     class StartDragHandler implements EventHandler<MouseEvent> {
@@ -215,7 +208,5 @@ public class InteractionControl {
             city.setX(newX);
             city.setY(newY);
         }
-
-
     }
 }
