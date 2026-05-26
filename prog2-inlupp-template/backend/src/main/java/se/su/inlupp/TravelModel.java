@@ -1,7 +1,6 @@
 package se.su.inlupp;
 
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,16 +28,19 @@ public class TravelModel {
             pw.println(imagePath);
                 for (City city : getCitys()) {
                     pw.println(city.getName() + ";" + city.getX() + ";" + city.getY());
-
                 }
                 pw.println("---");
                 for (City city : getCitys()) {
-                    for (Edge<City> edge : getCitysFrom(city)) {
-                        pw.println(city.getName() + ';' + edge.getDestination() + ';' + edge.getName() + ';' + edge.getWeight());
+                    for (Edge<City> edge : getFlightsFrom(city)) {
+                        //CompareTo ser ut lite konstig men den gör att en edge bara skapas åt ena hållet.
+                        if(city.getName().compareTo(edge.getDestination().getName()) < 0) {
+                            pw.println(city.getName() + ';' + edge.getDestination().getName() + ';' + edge.getName() + ';' + edge.getWeight());
+                        }
                     }
+                }
                     pw.close();
                     unsavedChanges = false;
-                }
+
         }catch(FileNotFoundException e) {
             System.err.print("Kunde inte hitta filen! (se till att det är en text fil)");
         }
@@ -136,7 +138,7 @@ public class TravelModel {
         return cityListGraph.getEdgeBetween(from, to);
     }
 
-    public Collection<Edge<City>> getCitysFrom(City from) {
+    public Collection<Edge<City>> getFlightsFrom(City from) {
         return cityListGraph.getEdgesFrom(from);
     }
 

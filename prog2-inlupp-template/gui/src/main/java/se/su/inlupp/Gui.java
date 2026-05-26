@@ -1,4 +1,5 @@
 package se.su.inlupp;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -6,6 +7,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import java.io.File;
 import java.util.Optional;
 
@@ -25,7 +27,7 @@ public class Gui extends Application {
         FlowPane top = new FlowPane();
         root.setTop(top);
         root.setCenter(center);
-        Scene scene = new Scene(root , 640 , 480);
+        Scene scene = new Scene(root, 640, 480);
 
         MenuItem saveTravelApp = new MenuItem("Spara");
         saveTravelApp.setOnAction(event -> {
@@ -42,22 +44,21 @@ public class Gui extends Application {
 
         MenuItem exitTravelApp = new MenuItem("Avsluta");
         exitTravelApp.setOnAction(event -> {
-            if(!travelModel.hasUnsavedChanges()) {
+            if (!travelModel.hasUnsavedChanges()) {
                 stage.close();
-            }
-            else{
-                if(closeConfirmation()) {
+            } else {
+                if (closeConfirmation()) {
                     stage.close();
                 }
             }
         });
 
         Menu menu = new Menu("Options...");
-        menu.getItems().addAll(saveTravelApp,loadTravelApp,exitTravelApp);
+        menu.getItems().addAll(saveTravelApp, loadTravelApp, exitTravelApp);
         MenuBar menuBar = new MenuBar(menu);
 
         Button addMapButton = new Button("Välj kartbild");
-        addMapButton.setOnAction(e ->{
+        addMapButton.setOnAction(e -> {
             center.promptImagePath(stage, travelModel);
         });
 
@@ -67,7 +68,10 @@ public class Gui extends Application {
         Button removeCityBtn = new Button("Ta bort stad");
         removeCityBtn.setOnAction(e -> interactionControl.removeCityClicked());
 
-        top.getChildren().addAll(addCityBtn, addMapButton,removeCityBtn , menuBar );
+        Button connectCitiesBtn = new Button("Koppla städer");
+        connectCitiesBtn.setOnAction(e -> interactionControl.connectCitiesDialog());
+
+        top.getChildren().addAll(addCityBtn, addMapButton, removeCityBtn, connectCitiesBtn, menuBar);
         stage.setScene(scene);
         stage.show();
     }
@@ -82,13 +86,19 @@ public class Gui extends Application {
         interactionControl.clearMaps();
         center.hasImage = false;
         for (City city : travelModel.getCitys()) {
-            addCityToGUI(travelModel,city);
+            addCityToGUI(travelModel, city);
+            }
+        for (City city : travelModel.getCitys()) {
+            //vet ej om vi får använda Edge inom Gui mappen, om inte: lägg till en metod i TravelModel som  gör det. -Alex
+            for(Edge<City> flight : travelModel.getFlightsFrom(city)){
+                interactionControl.drawLine(city, flight.getDestination(), flight.getName(),flight.getWeight());
+            }
         }
         center.addMapImage(stage, travelModel.getImagePath());
     }
 
 
-    private String getFilePath(){
+    private String getFilePath() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Välj en fil");
         File file = fileChooser.showOpenDialog(stage);
@@ -99,7 +109,7 @@ public class Gui extends Application {
         return null;
     }
 
-    private boolean closeConfirmation(){
+    private boolean closeConfirmation() {
         Alert closeConfirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         closeConfirmationAlert.setTitle("Avsluta");
         closeConfirmationAlert.setHeaderText("Är du säker på att du vill avsluta?");
