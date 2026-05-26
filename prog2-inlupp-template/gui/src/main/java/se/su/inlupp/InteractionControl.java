@@ -11,13 +11,16 @@ import javafx.scene.shape.Line;
 import org.w3c.dom.Text;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 public class InteractionControl {
 
 
     private final HashMap<City, Circle> cityCircleMap = new HashMap<>();
     private final HashMap<City, Label> cityToLabel = new HashMap<>();
+    private final HashMap<City, Set<Line>> cityLines = new HashMap<>();
     double startX, startY;
     private TravelModel travelModel;
     private Pane center;
@@ -29,6 +32,7 @@ public class InteractionControl {
 
 
     public void addCityClicked() {
+        clearCityClickHandlers();
         center.setOnMouseClicked(MouseEvent -> {
             double x = MouseEvent.getX();
             double y = MouseEvent.getY();
@@ -63,14 +67,23 @@ public class InteractionControl {
             Circle circle = cityCircleMap.get(city);
             Label label = cityToLabel.get(city);
             circle.setOnMouseClicked(e -> {
+                Set<Line> lines = cityLines.get(city);
+                if (lines != null) {
+
+                    center.getChildren().removeAll(lines);
+                    cityLines.remove(city);
+                }
                 System.out.println("Försöker ta bort: " + city.getName());
                 cityCircleMap.remove(city);
                 travelModel.removeCity(city);
                 center.getChildren().removeAll(label, circle);
+
             });
+            center.setOnMouseClicked(null);
 
         }
-        center.setOnMouseClicked(null);
+
+
     }
 
     public void clearMaps() {
@@ -100,6 +113,7 @@ public class InteractionControl {
 
     public void connectCitiesDialog() {
 
+        clearCityClickHandlers();
         Dialog<ButtonType> createEdgeprompt = new Dialog<>();
         GridPane pane = new GridPane();
         ButtonType connect = new ButtonType("Koppla");
@@ -138,6 +152,14 @@ public class InteractionControl {
                 } else {
                     try {
                         travelModel.connectCity(cityFrom, cityTo, flyglinje.getText(), Integer.parseInt(pris.getText()));
+                        Line line = new Line(cityFrom.getX(), cityFrom.getY(), cityTo.getX(), cityTo.getY());
+                        cityLines.computeIfAbsent(cityFrom, k -> new HashSet<>()).add(line);
+                        cityLines.computeIfAbsent(cityTo, k -> new HashSet<>()).add(line);
+                        line.endXProperty().bind(cityCircleMap.get(cityFrom).centerXProperty());
+                        line.endYProperty().bind(cityCircleMap.get(cityFrom).centerYProperty());
+                        line.startXProperty().bind(cityCircleMap.get(cityTo).centerXProperty());
+                        line.startYProperty().bind(cityCircleMap.get(cityTo).centerYProperty());
+                        center.getChildren().add(1, line);
                     } catch (NumberFormatException e) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Pris error");
@@ -145,12 +167,6 @@ public class InteractionControl {
                         alert.showAndWait();
                     }
                 }
-                Line line = new Line(cityFrom.getX() , cityFrom.getY() , cityTo.getX() , cityTo.getY());
-                line.endXProperty().bind(cityCircleMap.get(cityFrom).centerXProperty());
-                line.endYProperty().bind(cityCircleMap.get(cityFrom).centerYProperty());
-                line.startXProperty().bind(cityCircleMap.get(cityTo).centerXProperty());
-                line.startYProperty().bind(cityCircleMap.get(cityTo).centerYProperty());
-                center.getChildren().add(line);
 
             }
 
@@ -174,6 +190,12 @@ public class InteractionControl {
         }
     }
 
+    public void clearCityClickHandlers() {
+        for (Circle circle : cityCircleMap.values()) {
+            circle.setOnMouseClicked(null);
+        }
+    }
+
     class DragHandler implements EventHandler<MouseEvent> {
 
         private Circle circle;
@@ -193,5 +215,7 @@ public class InteractionControl {
             city.setX(newX);
             city.setY(newY);
         }
+
+
     }
 }
