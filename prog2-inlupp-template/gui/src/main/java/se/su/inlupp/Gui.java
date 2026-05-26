@@ -66,8 +66,12 @@ public class Gui extends Application {
 
         Button removeCityBtn = new Button("Ta bort stad");
         removeCityBtn.setOnAction(e -> interactionControl.removeCityClicked());
+        
 
-        top.getChildren().addAll(addCityBtn, addMapButton,removeCityBtn , menuBar );
+        Button connectCitiesBtn = new Button ("Koppla städer");
+        connectCitiesBtn.setOnAction(e -> interactionControl.connectCitiesDialog());
+
+        top.getChildren().addAll(addCityBtn, addMapButton,removeCityBtn , connectCitiesBtn,  menuBar );
         stage.setScene(scene);
         stage.show();
     }
