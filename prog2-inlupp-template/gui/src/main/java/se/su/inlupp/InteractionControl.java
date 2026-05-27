@@ -64,11 +64,7 @@ public class InteractionControl {
             Circle circle = cityCircleMap.get(city);
             Label label = cityToLabel.get(city);
             circle.setOnMouseClicked(e -> {
-                Set<Line> lines = cityLines.get(city);
-                if (lines != null) {
-                    center.getChildren().removeAll(lines);
-                    cityLines.remove(city);
-                }
+                removeLinesFromCity(city);
                 System.out.println("Försöker ta bort: " + city.getName());
                 cityCircleMap.remove(city);
                 travelModel.removeCity(city);
@@ -76,6 +72,56 @@ public class InteractionControl {
             });
             center.setOnMouseClicked(null);
         }
+    }
+
+    private void removeLinesFromCity(City city) {
+        Set<Line> lines = cityLines.get(city);
+        if (lines != null) {
+            center.getChildren().removeAll(lines);
+            cityLines.remove(city);
+            System.out.println(center.getChildren());
+        }
+    }
+
+    public void removeLineBetweenCitiesDialog() {
+        clearCityClickHandlers();
+        Dialog<ButtonType> getCitiesPrompt = new Dialog<>();
+        GridPane gridPane = new GridPane();
+        ButtonType connect = new ButtonType("Ta bort koppling");
+        getCitiesPrompt.getDialogPane().getButtonTypes().addAll(connect);
+
+        TextField from = new TextField();
+        TextField to = new TextField();
+        gridPane.add(new Label("Stad 1"), 0, 0);
+        gridPane.add(from, 1, 0);
+        gridPane.add(new Label("Stad 2"), 0, 1);
+        gridPane.add(to, 1, 1);
+
+        getCitiesPrompt.getDialogPane().setContent(gridPane);
+        Optional<ButtonType> result = getCitiesPrompt.showAndWait();
+        if (result.isPresent() && result.get() == connect) {
+            if (travelModel.findCityByName(from.getText()) == null || travelModel.findCityByName(to.getText()) == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("City error");
+                alert.setContentText("Kunde inte hitta en av städerna");
+                alert.showAndWait();
+            }
+            removeLineBetweenCities(travelModel.findCityByName(from.getText()),travelModel.findCityByName(to.getText()));
+        }
+    }
+
+    private void removeLineBetweenCities(City cityOne, City cityTwo) {
+        travelModel.disconnectCity(cityOne,cityTwo);
+        for(Line lineOne: cityLines.get(cityOne)) {
+            for(Line lineTwo: cityLines.get(cityTwo)){
+                if(lineOne.equals(lineTwo)){
+                    center.getChildren().remove(lineOne);
+//                    vet fortfarande ej varför detta inte behövs: center.getChildren().remove(lineTwo);
+
+                }
+            }
+        }
+
     }
 
     public void clearMaps() {
@@ -115,7 +161,7 @@ public class InteractionControl {
         TextField to = new TextField();
         TextField flyglinje = new TextField();
         TextField pris = new TextField();
-        pane.add(new Label("From"), 0, 0);
+        pane.add(new Label("Från"), 0, 0);
         pane.add(from, 1, 0);
         pane.add(new Label("Till"), 0, 1);
         pane.add(to, 1, 1);

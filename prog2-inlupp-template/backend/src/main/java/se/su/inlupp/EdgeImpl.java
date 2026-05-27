@@ -7,7 +7,7 @@ public class EdgeImpl <T> implements Edge<T> {
 
     public EdgeImpl(T destination , String name , int weight){
         this.destination = destination;
-        this.name = name ;
+        this.name = name;
         this.weight = weight;
     }
     public int getWeight(){
