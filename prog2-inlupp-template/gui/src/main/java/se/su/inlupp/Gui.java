@@ -94,7 +94,6 @@ public class Gui extends Application {
     }
 
     private void addCityToGUI(TravelModel travelModel, City city) {
-//        InteractionControl interactionControl = new InteractionControl(travelModel, center);
         interactionControl.interactableCity(travelModel, city, center);
     }
 
@@ -104,7 +103,7 @@ public class Gui extends Application {
         center.hasImage = false;
         for (City city : travelModel.getCitys()) {
             addCityToGUI(travelModel, city);
-            }
+        }
         for (City city : travelModel.getCitys()) {
             //vet ej om vi får använda Edge inom Gui mappen, om inte: lägg till en metod i TravelModel som  gör det. -Alex
             for (Edge<City> flight : travelModel.getFlightsFrom(city)) {
