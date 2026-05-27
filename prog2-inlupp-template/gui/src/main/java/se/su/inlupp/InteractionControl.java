@@ -88,7 +88,7 @@ public class InteractionControl {
         if(cities == null){
             return;
         }
-            removeLineBetweenCities(cities.getFirst(), cities.getLast());
+        removeLineBetweenCities(cities.getFirst(), cities.getLast());
     }
 
     private List<City> getTwoCitiesFromDialog(String dialogName, String buttonText) {
@@ -156,7 +156,7 @@ public class InteractionControl {
 
 
     public void interactableCity(TravelModel travelModel, City city, Pane center) {
-        Circle circle = new Circle(city.getX(), city.getY(), 5, Color.BLUE);
+        Circle circle = new Circle(city.getX(), city.getY(), 5, Color.RED);
         Label cityName = new Label(city.getName());
         cityName.setLayoutX(city.getX() + 20);
         cityName.setLayoutY(city.getY() - 10);
@@ -215,7 +215,7 @@ public class InteractionControl {
                 } else {
                     try {
                         travelModel.connectCity(cityFrom, cityTo, flyglinje.getText(), Integer.parseInt(pris.getText()));
-                    drawLine(cityFrom, cityTo, flyglinje.getText(), Integer.parseInt(pris.getText()));
+                        drawLine(cityFrom, cityTo, flyglinje.getText(), Integer.parseInt(pris.getText()));
                     } catch (NumberFormatException e) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Pris error");
@@ -229,14 +229,14 @@ public class InteractionControl {
     }
 
     public void drawLine(City cityFrom, City cityTo, String flyglinje, int pris) {
-            Line line = new Line(cityFrom.getX(), cityFrom.getY(), cityTo.getX(), cityTo.getY());
-            cityLines.computeIfAbsent(cityFrom, k -> new HashSet<>()).add(line);
-            cityLines.computeIfAbsent(cityTo, k -> new HashSet<>()).add(line);
-            line.endXProperty().bind(cityCircleMap.get(cityFrom).centerXProperty());
-            line.endYProperty().bind(cityCircleMap.get(cityFrom).centerYProperty());
-            line.startXProperty().bind(cityCircleMap.get(cityTo).centerXProperty());
-            line.startYProperty().bind(cityCircleMap.get(cityTo).centerYProperty());
-            center.getChildren().add(1, line);
+        Line line = new Line(cityFrom.getX(), cityFrom.getY(), cityTo.getX(), cityTo.getY());
+        cityLines.computeIfAbsent(cityFrom, k -> new HashSet<>()).add(line);
+        cityLines.computeIfAbsent(cityTo, k -> new HashSet<>()).add(line);
+        line.endXProperty().bind(cityCircleMap.get(cityFrom).centerXProperty());
+        line.endYProperty().bind(cityCircleMap.get(cityFrom).centerYProperty());
+        line.startXProperty().bind(cityCircleMap.get(cityTo).centerXProperty());
+        line.startYProperty().bind(cityCircleMap.get(cityTo).centerYProperty());
+        center.getChildren().add(1, line);
     }
 
     public void runDFS() {
