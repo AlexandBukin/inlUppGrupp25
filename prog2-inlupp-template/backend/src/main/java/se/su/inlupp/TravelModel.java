@@ -13,7 +13,7 @@ import java.util.Set;
 public class TravelModel {
     private ListGraph<City> cityListGraph;
     private final BFSPathFinder<City> bfsPathFinder;
-    private DFSPathFinder<City> dfsPathFinder;
+    private final DFSPathFinder<City> dfsPathFinder;
     private PathFinder<City> cityPathFinder;
     private boolean unsavedChanges;
     private String imagePath;

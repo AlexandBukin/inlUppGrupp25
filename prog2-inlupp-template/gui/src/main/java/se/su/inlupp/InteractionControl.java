@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
 
 import java.util.*;
 
@@ -240,39 +241,43 @@ public class InteractionControl {
 
     public void runDFS() {
         travelModel.setCityPathFinderDFS();
-        List<City> cities = getTwoCitiesFromDialog("Välj städer för DFS sökning","Hitta Väg");
-        if(cities==null) {
+        run("Välj städer för DFS sökning");
+    }
+    public void runBFS(){
+        travelModel.setCityPathFinderBFS();
+        run("Välj städer för BFS sökning");
+    }
+
+    private void run(String dialogTitle) {
+        List<City> cities = getTwoCitiesFromDialog(dialogTitle, "Hitta Väg");
+        if (cities == null) {
             //Lägg till alert funktionalitet sen (Bryt ut alla alerts till en ny metod).
             return;
         }
-        Path<City> path = travelModel.findPath(cities.getFirst(),cities.getLast());
+        Path<City> path = travelModel.findPath(cities.getFirst(), cities.getLast());
         clearCityClickHandlers();
         Dialog<ButtonType> showPath = new Dialog<>();
+        ButtonType close = new ButtonType("Stäng");
+        showPath.getDialogPane().getButtonTypes().addAll(close);
         showPath.setTitle("Resultat");
         GridPane pane = new GridPane();
         showPath.getDialogPane().setContent(pane);
         pane.minHeight(400);
         pane.minWidth(500);
         int i = 0;
-        pane.add(new Label("Start: "+cities.getFirst().getName()),0,i);
-        for(Edge<City> edge: path.getEdges()) {
+        pane.add(new Label("Start: " + cities.getFirst().getName()), 0, i);
+        for (Edge<City> edge : path.getEdges()) {
             i++;
-            pane.add(new Label(" |"),0,i);
+            pane.add(new Label(" |"), 0, i);
             i++;
-            pane.add(new Label("V"),0,i);
-            i+=2;
-            pane.add(new Label("Stop: "+edge.getDestination().getName() +" Flyglinje: "+ edge.getName() +" Pris: "+ edge.getWeight()),0,i);
+            pane.add(new Label("V"), 0, i);
+            i += 2;
+            pane.add(new Label("Stop: " + edge.getDestination().getName() + " Flyglinje: " + edge.getName() + " Pris: " + edge.getWeight()), 0, i);
         }
-        showPath.showAndWait();
-    }
-    public void runBFS(){
-        travelModel.setCityPathFinderBFS();
-        List<City> cities = getTwoCitiesFromDialog("Välj städer för DFS sökning","Hitta Väg");
-        if(cities==null) {
-            //Lägg till alert funktionalitet sen (Bryt ut alla alerts till en ny metod).
-            return;
+        Optional<ButtonType> result = showPath.showAndWait();
+        if (result.isPresent() && result.get() == close) {
+            showPath.close();
         }
-        Path<City> path = travelModel.findPath(cities.getFirst(),cities.getLast());
     }
 
     class StartDragHandler implements EventHandler<MouseEvent> {
