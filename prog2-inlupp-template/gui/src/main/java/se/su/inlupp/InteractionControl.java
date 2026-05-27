@@ -9,10 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class InteractionControl {
 
@@ -85,9 +82,19 @@ public class InteractionControl {
 
     public void removeLineBetweenCitiesDialog() {
         clearCityClickHandlers();
+        List<City> cities = getTwoCitiesFromDialog("Remove Line","Ta bort koppling");
+        //Borde aldrig vara null, hanteras i getTwoCitiesFromDialog();
+        if(cities.getFirst() == null){
+            return;
+        }
+            removeLineBetweenCities(cities.getFirst(), cities.getLast());
+    }
+
+    private List<City> getTwoCitiesFromDialog(String dialogName, String buttonText) {
         Dialog<ButtonType> getCitiesPrompt = new Dialog<>();
+        getCitiesPrompt.setTitle(dialogName);
         GridPane gridPane = new GridPane();
-        ButtonType disconnect = new ButtonType("Ta bort koppling");
+        ButtonType disconnect = new ButtonType(buttonText);
         getCitiesPrompt.getDialogPane().getButtonTypes().addAll(disconnect);
 
         TextField from = new TextField();
@@ -106,9 +113,14 @@ public class InteractionControl {
                 alert.setContentText("Kunde inte hitta en av städerna");
                 alert.showAndWait();
             }else {
-                removeLineBetweenCities(travelModel.findCityByName(from.getText()), travelModel.findCityByName(to.getText()));
+                List<City> cities = new ArrayList<>();
+                cities.add(travelModel.findCityByName(from.getText()));
+                cities.add(travelModel.findCityByName(to.getText()));
+
+                return cities;
             }
         }
+        return null;
     }
 
     private void removeLineBetweenCities(City cityOne, City cityTwo) {
@@ -133,7 +145,6 @@ public class InteractionControl {
             alert.setContentText("Finns inga flyg mellan städerna!");
             alert.showAndWait();
         }
-
     }
 
     public void clearMaps() {
