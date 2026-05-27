@@ -105,21 +105,34 @@ public class InteractionControl {
                 alert.setTitle("City error");
                 alert.setContentText("Kunde inte hitta en av städerna");
                 alert.showAndWait();
+            }else {
+                removeLineBetweenCities(travelModel.findCityByName(from.getText()), travelModel.findCityByName(to.getText()));
             }
-            removeLineBetweenCities(travelModel.findCityByName(from.getText()),travelModel.findCityByName(to.getText()));
         }
     }
 
     private void removeLineBetweenCities(City cityOne, City cityTwo) {
-        travelModel.disconnectCity(cityOne,cityTwo);
-        for(Line lineOne: cityLines.get(cityOne)) {
-            for(Line lineTwo: cityLines.get(cityTwo)){
-                if(lineOne.equals(lineTwo)){
-                    center.getChildren().remove(lineOne);
-//                    vet fortfarande ej varför detta inte behövs: center.getChildren().remove(lineTwo);
-
+        if((cityLines.get(cityOne) == null || cityLines.get(cityTwo) == null)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("City error");
+            alert.setContentText("En av givna städerna har inga flyg");
+            alert.showAndWait();
+            return;
+        }else{
+            for(Line lineOne: cityLines.get(cityOne)) {
+                for(Line lineTwo: cityLines.get(cityTwo)){
+                    if(lineOne.equals(lineTwo)) {
+                        center.getChildren().remove(lineOne);
+                        travelModel.disconnectCity(cityOne,cityTwo);
+    //                    vet fortfarande ej varför detta inte behövs: center.getChildren().remove(lineTwo);
+                        return;
+                    }
                 }
             }
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Edge error");
+            alert.setContentText("Finns inga flyg mellan städerna!");
+            alert.showAndWait();
         }
 
     }
