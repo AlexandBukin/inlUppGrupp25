@@ -12,12 +12,16 @@ import java.util.Set;
 
 public class TravelModel {
     private ListGraph<City> cityListGraph;
+    private final BFSPathFinder<City> bfsPathFinder;
+    private DFSPathFinder<City> dfsPathFinder;
     private PathFinder<City> cityPathFinder;
     private boolean unsavedChanges;
     private String imagePath;
 
     public TravelModel() {
         cityListGraph = new ListGraph<>();
+        this.bfsPathFinder = new BFSPathFinder<City>();
+        this.dfsPathFinder = new DFSPathFinder<City>();
         unsavedChanges = false; // VIKTIGT ! behöver sätta till false varje gång vi sparar i Användargränssnittet.
         //Lägg till det i alla dessa metoder, plus en getter hasUnsavedChanges()! //Tror jag har fixat det! -Alex
     }
@@ -89,10 +93,14 @@ public class TravelModel {
         return null; // null hantering kan behövas åtgärdas.
     }
 
-    public void setCityPathFinder(PathFinder<City> pathFinder) {
-        this.cityPathFinder = pathFinder;
-
+    public void setCityPathFinderBFS() {
+        this.cityPathFinder = bfsPathFinder;
     }
+
+    public void setCityPathFinderDFS() {
+        this.cityPathFinder = dfsPathFinder;
+    }
+
     public Path<City> findPath(City from , City to){
         return cityPathFinder.findPath(cityListGraph , from , to );
     }

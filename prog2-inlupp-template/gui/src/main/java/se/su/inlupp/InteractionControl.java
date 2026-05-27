@@ -84,7 +84,7 @@ public class InteractionControl {
         clearCityClickHandlers();
         List<City> cities = getTwoCitiesFromDialog("Remove Line","Ta bort koppling");
         //Borde aldrig vara null, hanteras i getTwoCitiesFromDialog();
-        if(cities.getFirst() == null){
+        if(cities == null){
             return;
         }
             removeLineBetweenCities(cities.getFirst(), cities.getLast());
@@ -236,6 +236,43 @@ public class InteractionControl {
             line.startXProperty().bind(cityCircleMap.get(cityTo).centerXProperty());
             line.startYProperty().bind(cityCircleMap.get(cityTo).centerYProperty());
             center.getChildren().add(1, line);
+    }
+
+    public void runDFS() {
+        travelModel.setCityPathFinderDFS();
+        List<City> cities = getTwoCitiesFromDialog("Välj städer för DFS sökning","Hitta Väg");
+        if(cities==null) {
+            //Lägg till alert funktionalitet sen (Bryt ut alla alerts till en ny metod).
+            return;
+        }
+        Path<City> path = travelModel.findPath(cities.getFirst(),cities.getLast());
+        clearCityClickHandlers();
+        Dialog<ButtonType> showPath = new Dialog<>();
+        showPath.setTitle("Resultat");
+        GridPane pane = new GridPane();
+        showPath.getDialogPane().setContent(pane);
+        pane.minHeight(400);
+        pane.minWidth(500);
+        int i = 0;
+        pane.add(new Label("Start: "+cities.getFirst().getName()),0,i);
+        for(Edge<City> edge: path.getEdges()) {
+            i++;
+            pane.add(new Label(" |"),0,i);
+            i++;
+            pane.add(new Label("V"),0,i);
+            i+=2;
+            pane.add(new Label("Stop: "+edge.getDestination().getName() +" Flyglinje: "+ edge.getName() +" Pris: "+ edge.getWeight()),0,i);
+        }
+        showPath.showAndWait();
+    }
+    public void runBFS(){
+        travelModel.setCityPathFinderBFS();
+        List<City> cities = getTwoCitiesFromDialog("Välj städer för DFS sökning","Hitta Väg");
+        if(cities==null) {
+            //Lägg till alert funktionalitet sen (Bryt ut alla alerts till en ny metod).
+            return;
+        }
+        Path<City> path = travelModel.findPath(cities.getFirst(),cities.getLast());
     }
 
     class StartDragHandler implements EventHandler<MouseEvent> {

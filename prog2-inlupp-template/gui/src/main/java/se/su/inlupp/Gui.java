@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.Optional;
 
-
 public class Gui extends Application {
 
     InteractionControl interactionControl;
@@ -57,6 +56,21 @@ public class Gui extends Application {
         menu.getItems().addAll(saveTravelApp, loadTravelApp, exitTravelApp);
         MenuBar menuBar = new MenuBar(menu);
 
+        ComboBox<String> cb = new ComboBox<>();
+        cb.setPromptText("Välj algoritm");
+        String[] algoritmAlternativ = {"DFS", "BFS"};
+        cb.getItems().addAll(algoritmAlternativ);
+
+        Button findPathBtn = new Button("Hitta väg");
+        findPathBtn.setOnAction(e -> {
+            String selected = cb.getValue();
+            if (selected.equals("DFS")) {
+                interactionControl.runDFS();
+            } else if (selected.equals("BFS")) {
+                interactionControl.runBFS();
+            }
+        });
+
         Button addMapButton = new Button("Välj kartbild");
         addMapButton.setOnAction(e -> {
             center.promptImagePath(stage, travelModel);
@@ -74,7 +88,7 @@ public class Gui extends Application {
         Button removeConnectionBtn = new Button("Ta bort koppling");
         removeConnectionBtn.setOnAction(e -> interactionControl.removeLineBetweenCitiesDialog());
 
-        top.getChildren().addAll(addCityBtn, addMapButton, removeCityBtn, connectCitiesBtn, removeConnectionBtn, menuBar);
+        top.getChildren().addAll(cb, findPathBtn, addCityBtn, addMapButton, removeCityBtn, connectCitiesBtn, removeConnectionBtn, menuBar);
         stage.setScene(scene);
         stage.show();
     }
