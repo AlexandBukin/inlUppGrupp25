@@ -87,8 +87,8 @@ public class InteractionControl {
         clearCityClickHandlers();
         Dialog<ButtonType> getCitiesPrompt = new Dialog<>();
         GridPane gridPane = new GridPane();
-        ButtonType connect = new ButtonType("Ta bort koppling");
-        getCitiesPrompt.getDialogPane().getButtonTypes().addAll(connect);
+        ButtonType disconnect = new ButtonType("Ta bort koppling");
+        getCitiesPrompt.getDialogPane().getButtonTypes().addAll(disconnect);
 
         TextField from = new TextField();
         TextField to = new TextField();
@@ -99,8 +99,8 @@ public class InteractionControl {
 
         getCitiesPrompt.getDialogPane().setContent(gridPane);
         Optional<ButtonType> result = getCitiesPrompt.showAndWait();
-        if (result.isPresent() && result.get() == connect) {
-            if (travelModel.findCityByName(from.getText()) == null || travelModel.findCityByName(to.getText()) == null) {
+        if (result.isPresent() && result.get() == disconnect) {
+            if (travelModel.findCityByName(from.getText()) == null || travelModel.findCityByName(to.getText()) == null || to.getText().equals(from.getText())) /* borde inte vara här */ {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("City error");
                 alert.setContentText("Kunde inte hitta en av städerna");
@@ -117,14 +117,13 @@ public class InteractionControl {
             alert.setTitle("City error");
             alert.setContentText("En av givna städerna har inga flyg");
             alert.showAndWait();
-            return;
         }else{
             for(Line lineOne: cityLines.get(cityOne)) {
                 for(Line lineTwo: cityLines.get(cityTwo)){
                     if(lineOne.equals(lineTwo)) {
                         center.getChildren().remove(lineOne);
+                        cityLines.get(cityOne).remove(lineOne);
                         travelModel.disconnectCity(cityOne,cityTwo);
-    //                    vet fortfarande ej varför detta inte behövs: center.getChildren().remove(lineTwo);
                         return;
                     }
                 }
@@ -140,6 +139,7 @@ public class InteractionControl {
     public void clearMaps() {
         cityCircleMap.clear();
         cityToLabel.clear();
+        cityLines.clear();
     }
 
 
@@ -187,7 +187,7 @@ public class InteractionControl {
 
         Optional<ButtonType> result = createEdgeprompt.showAndWait();
         if (result.isPresent() && result.get() == connect) {
-            if (from.getText().isEmpty() || to.getText().isEmpty() || flyglinje.getText().isEmpty() || pris.getText().isEmpty()) {
+            if (from.getText().isEmpty() || to.getText().isEmpty() || flyglinje.getText().isEmpty() || pris.getText().isEmpty() || from.getText().equals(to.getText())) /*Borde flyttas till ny alert men vill inte ta plats.*/ {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Kant error");
                 alert.setContentText("Kant kan inte skapas, kontrollera textfälten");

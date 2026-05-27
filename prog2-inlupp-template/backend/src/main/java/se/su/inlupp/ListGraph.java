@@ -99,7 +99,7 @@ public class ListGraph<T> implements Graph<T> , Iterable<T>{
     if(!adjacencyList.containsKey(node1) || !adjacencyList.containsKey(node2)){
     throw new NoSuchElementException("Nod existerar inte");
     }
-    for(Edge edge : adjacencyList.get(node1)){
+    for(Edge<T> edge : adjacencyList.get(node1)){
       if(edge.getDestination().equals(node2)){
         return edge;
       }

@@ -93,8 +93,10 @@ public class Gui extends Application {
             }
         for (City city : travelModel.getCitys()) {
             //vet ej om vi får använda Edge inom Gui mappen, om inte: lägg till en metod i TravelModel som  gör det. -Alex
-            for(Edge<City> flight : travelModel.getFlightsFrom(city)){
-                interactionControl.drawLine(city, flight.getDestination(), flight.getName(),flight.getWeight());
+            for (Edge<City> flight : travelModel.getFlightsFrom(city)) {
+                if (city.getName().compareTo(flight.getDestination().getName()) < 0) {
+                    interactionControl.drawLine(city, flight.getDestination(), flight.getName(), flight.getWeight());
+                }
             }
         }
         center.addMapImage(stage, travelModel.getImagePath());
