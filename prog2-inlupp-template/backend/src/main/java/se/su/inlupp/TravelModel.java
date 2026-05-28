@@ -78,15 +78,16 @@ public class TravelModel {
 
         }catch(FileNotFoundException e){
             System.err.print("Hittade inte filen!");
-        }catch(IOException e){
-        System.err.print("IO-fel upstod!");
+//        }catch(IOException e){
+//        System.err.print("IO-fel upstod!");
     }
 
     }
 
     public City findCityByName(String name) {
         for (City city : getCitys()) {
-            if (city.getName().equals(name)) {
+            //Kan skapa buggar
+            if (city.getName().equalsIgnoreCase(name)) {
                 return city;
             }
         }

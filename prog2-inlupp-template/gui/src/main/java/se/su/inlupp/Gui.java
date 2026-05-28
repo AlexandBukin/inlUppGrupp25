@@ -26,7 +26,8 @@ public class Gui extends Application {
         FlowPane top = new FlowPane();
         root.setTop(top);
         root.setCenter(center);
-        Scene scene = new Scene(root, 640, 480);
+        Scene scene = new Scene(root, 1280, 720);
+        stage.setResizable(false);
 
         MenuItem saveTravelApp = new MenuItem("Spara");
         saveTravelApp.setOnAction(event -> {

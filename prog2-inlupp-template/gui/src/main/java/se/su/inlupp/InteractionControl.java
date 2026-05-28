@@ -39,7 +39,7 @@ public class InteractionControl {
             Optional<String> result = dialog.showAndWait();
 
             if (result.isPresent()) {
-                String name = result.get();
+                String name = result.get().substring(0,1).toUpperCase()+result.get().substring(1).toLowerCase();
                 City city = new City(name, x, y);
                 if (name.isEmpty() || travelModel.findCityByName(name) != null) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -84,7 +84,6 @@ public class InteractionControl {
     public void removeLineBetweenCitiesDialog() {
         clearCityClickHandlers();
         List<City> cities = getTwoCitiesFromDialog("Remove Line","Ta bort koppling");
-        //Borde aldrig vara null, hanteras i getTwoCitiesFromDialog();
         if(cities == null){
             return;
         }
@@ -108,15 +107,17 @@ public class InteractionControl {
         getCitiesPrompt.getDialogPane().setContent(gridPane);
         Optional<ButtonType> result = getCitiesPrompt.showAndWait();
         if (result.isPresent() && result.get() == disconnect) {
-            if (travelModel.findCityByName(from.getText()) == null || travelModel.findCityByName(to.getText()) == null || to.getText().equals(from.getText())) /* borde inte vara här */ {
+            String fromSanitized = from.getText().substring(0,1).toUpperCase()+from.getText().substring(1).toLowerCase();
+            String toSanitized = to.getText().substring(0,1).toUpperCase()+to.getText().substring(1).toLowerCase();
+            if (travelModel.findCityByName(fromSanitized) == null || travelModel.findCityByName(toSanitized) == null || toSanitized.equals(fromSanitized)) /* borde inte vara här */ {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("City error");
                 alert.setContentText("Kunde inte hitta en av städerna");
                 alert.showAndWait();
             }else {
                 List<City> cities = new ArrayList<>();
-                cities.add(travelModel.findCityByName(from.getText()));
-                cities.add(travelModel.findCityByName(to.getText()));
+                cities.add(travelModel.findCityByName(fromSanitized));
+                cities.add(travelModel.findCityByName(toSanitized));
 
                 return cities;
             }
@@ -196,7 +197,6 @@ public class InteractionControl {
         pane.add(pris, 1, 3);
 
         createEdgeprompt.getDialogPane().setContent(pane);
-
         Optional<ButtonType> result = createEdgeprompt.showAndWait();
         if (result.isPresent() && result.get() == connect) {
             if (from.getText().isEmpty() || to.getText().isEmpty() || flyglinje.getText().isEmpty() || pris.getText().isEmpty() || from.getText().equals(to.getText())) /*Borde flyttas till ny alert men vill inte ta plats.*/ {
@@ -220,6 +220,11 @@ public class InteractionControl {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Pris error");
                         alert.setContentText("Priset måste vara ett heltal");
+                        alert.showAndWait();
+                    } catch (IllegalStateException e){
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Kant error");
+                        alert.setContentText("Kanten finns redan");
                         alert.showAndWait();
                     }
                 }

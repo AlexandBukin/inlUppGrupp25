@@ -30,8 +30,8 @@ public class Map extends Pane {
         }
         Image map = new Image(new File(imagePath).toURI().toString());
         ImageView mapView = new ImageView(map);
-        mapView.fitHeightProperty().bind(stage.heightProperty());
-        mapView.fitWidthProperty().bind(stage.widthProperty());
+        mapView.fitHeightProperty().bind(this.heightProperty());
+        mapView.fitWidthProperty().bind(this.widthProperty());
         this.getChildren().addFirst(mapView);
         hasImage = true;
     }
